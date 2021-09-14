@@ -1,8 +1,12 @@
 <template>
-    ROOT
-    <span class="text-green-500">asdasd</span>
-    <img alt="Vue logo" src="./assets/logo.png">
-    <router-view></router-view>
+    <div id="main" class="">
+        <div class="self-center my-8 border-b-4 border-gray-300 pb-2">
+            <!-- <img class="" alt="Vue logo" src="./assets/logo.png"> -->
+            <span class="text-5xl uppercase font-bold text-blue-800">Machinest</span>
+        </div>
+
+        <router-view></router-view>
+    </div>
 </template>
 
 <script lang="ts">
@@ -18,15 +22,20 @@ export default defineComponent({
     methods: {
         //
     },
-
 });
 
 </script>
 
 <style lang="scss">
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+
+#main {
+    @apply md:mx-auto mx-2 px-4 max-w-4xl flex flex-col h-screen ;
+    @apply border border-gray-200;
+}
+
+h1 {
+    @apply mb-4 font-medium text-5xl text-gray-800 #{!important};
+}
 
 /*
 #app {

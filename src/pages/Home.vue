@@ -1,9 +1,15 @@
 <template>
   <div>
-    <h1 class="text-red-500">HOME</h1>
+    <h1>HOME</h1>
 
-    <button @click="$router.push({name: 'load'})">(1) Start loading data</button>
-    <router-link :to="{ name: 'load' }">(2) Start loading data</router-link>
+    <p>Welcome to <span class="underline">MACHINEST</span>. Our goal is to enable everone to train Machine Learning models in their browser. </p>
+
+    <!-- <button @click="$router.push({name: 'load'})">(1) Start loading data</button> -->
+
+    <div class="flex flex-row-reverse mt-8">
+        <router-link :to="{ name: 'load' }" class="bg-blue-600 px-4 py-1 text-white border-b-4 border-blue-400">Start loading data &gt;</router-link>
+    </div>
+
   </div>
 </template>
 
