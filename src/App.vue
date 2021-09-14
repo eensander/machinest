@@ -1,18 +1,48 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    ROOT
+    <img alt="Vue logo" src="./assets/logo.png">
+    <component
+        @change="alert('gang')"
+        :is="dynamicComponent">
+    </component>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+
+import routes from './routes';
+
+const pages: { page_name: object } = {
+    'home': import('./pages/Home.vue'),
+}
+
+// import Home from './components/Home.vue';
+// import HelloWorld from './components/HelloWorld.vue';
+
+
+// Routing guide from:
+// https://v3.vuejs.org/guide/routing.html#official-router
+// https://github.com/phanan/vue-3.0-simple-routing-example
 
 export default defineComponent({
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+	name: 'App',
+
+	// components: {
+	// 	// HelloWorld
+	// },
+
+	data: () => ({
+        currentPage = 'Home'
+	}),
+
+    methods: {
+        open_page(page_name: string) {
+
+        }
+    },
+
 });
+
 </script>
 
 <style lang="scss">
