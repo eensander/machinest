@@ -27,14 +27,21 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+}
 
 #main {
     @apply md:mx-auto mx-2 px-4 max-w-4xl flex flex-col h-screen ;
     @apply border border-gray-200;
 }
 
+
 h1 {
-    @apply mb-4 font-medium text-5xl text-gray-800 #{!important};
+    @apply mb-4 font-bold font-serif text-5xl text-gray-800
 }
 
 /*

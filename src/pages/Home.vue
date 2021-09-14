@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>HOME</h1>
+    <h1>Home</h1>
 
     <p>Welcome to <span class="underline">MACHINEST</span>. Our goal is to enable everone to train Machine Learning models in their browser. </p>
 
