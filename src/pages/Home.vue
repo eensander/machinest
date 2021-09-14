@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h1>HOME</h1>
+    <h1 class="text-red-500">HOME</h1>
+
+    <button @click="$router.push({name: 'load'})">(1) Start loading data</button>
+    <router-link :to="{ name: 'load' }">(2) Start loading data</router-link>
   </div>
 </template>
 
