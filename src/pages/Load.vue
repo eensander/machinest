@@ -8,6 +8,7 @@
         <input type="file" @change="file_changed($event)">
         <div>
             <span class="bg-red-400">{{ filename }}</span>
+            <span class="bg-red-400">{{ progress }}</span>
         </div>
     </div>
 
@@ -26,29 +27,36 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import Papa from 'papaparse';
+
 export default defineComponent({
 
 	data: () => ({
-        filename: null
+        filename: null,
+        progress: "idle"
 	}),
 
     methods: {
         file_changed(event: any) {
             console.log(event)
-            this.filename = event.target.files[0].name;
+            // this.filename = event.target.files[0].name;
             const file = event.target.files[0];
 
-            const reader = new FileReader();
-
-            console.log(reader.readAsArrayBuffer(file));
-
-            reader.onload = function(e) {
-                var arrayBuffer = reader.result;
-                console.log(arrayBuffer)
-
-                if (arrayBuffer != null)
-                    console.log(arrayBuffer.slice(0, 10))
-            }
+            Papa.parse(file, {
+                before: (file) =>
+				{
+					this.progress = "started";
+				},
+				error: (err, file) =>
+				{
+					this.progress = "errored";
+					console.log("ERROR:", err, file);
+				},
+				complete: () =>
+				{
+                    this.progress = "completed";
+				}
+            });
 
             // https://www.papaparse.com/
         }
