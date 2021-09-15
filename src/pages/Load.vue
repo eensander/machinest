@@ -37,16 +37,23 @@ export default defineComponent({
 	}),
 
     methods: {
-        file_changed(event: any) {
-            console.log(event)
+        file_changed(e: Event) {
+            const target = <HTMLInputElement>e.target;
+            if (target == null || target.files == null) {
+                return;
+            }
+
+            if (target.files.length !== 1) {
+                return; // invalid amount of files (or input removed?)
+            }
+
+            console.log(e)
             // this.filename = event.target.files[0].name;
-            const file = event.target.files[0];
+            const file = target.files[0];
+
+            
 
             Papa.parse(file, {
-                before: (file) =>
-				{
-					this.progress = "started";
-				},
 				error: (err, file) =>
 				{
 					this.progress = "errored";
