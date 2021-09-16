@@ -6,8 +6,8 @@ import * as VueRouter from 'vue-router'
 // These can be imported from other files
 import Home from './pages/0_Home.vue';
 import Load from './pages/1_Load.vue';
-import Features from './pages/2_Features.vue';
-import Method from './pages/3_Method.vue';
+import Method from './pages/2_Method.vue';
+import Features from './pages/3_Features.vue';
 
 // 2. Define some routes
 // Each route should map to a component.
@@ -15,8 +15,8 @@ import Method from './pages/3_Method.vue';
 const routes = [
   { name: 'home', path: '/', component: Home },
   { name: 'load', path: '/load', component: Load },
-  { name: 'features', path: '/features', component: Features },
   { name: 'method', path: '/method', component: Method },
+  { name: 'features', path: '/features', component: Features },
 ]
 
 // 3. Create the router instance and pass the `routes` option

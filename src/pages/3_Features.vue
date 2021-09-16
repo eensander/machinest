@@ -6,13 +6,32 @@
 
     <hr class="mt-1" />
 
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th>DataType</th>
+                <th>Dependant</th>
+                <th>Independant</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-if="features == null">
+                <td colspan="4">Loading...</td>
+            </tr>
+            <tr v-else-if="features.length == 0">
+                <td colspan="4">No features available in dataset...</td>
+            </tr>
+        </tbody>
+    </table>
+
     <div class="flex justify-between mt-8">
         <button @click="$router.push({ name: 'home' });" class="router-btn">
             &#xff1c; 1. Load
         </button>
         <div class="w-0 h-0 invisible"></div>
         <button @click="$router.push({ name: 'home' });" :disabled="page_next_disabled" class="router-btn">
-            3. Training Method &#xff1e;
+            4. Data Cleaning &#xff1e;
         </button>
     </div>
 
@@ -23,10 +42,16 @@
 import { defineComponent } from 'vue';
 import Papa from 'papaparse';
 
+type Feature = {
+    name: string,
+    datatype: string,
+    dependant: boolean,
+}
+
 export default defineComponent({
 
 	data: () => ({
-
+        features: null as Feature[] | null
 	}),
 
     methods: {

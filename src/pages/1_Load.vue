@@ -51,8 +51,8 @@
             &#xff1c; Home
         </button>
         <div class="w-0 h-0 invisible"></div>
-        <button @click="$router.push({ name: 'features' });" :disabled="page_next_disabled" class="router-btn">
-            2. Feature Configuration &#xff1e;
+        <button @click="$router.push({ name: 'method' });" :disabled="page_next_disabled" class="router-btn">
+            3. Training Method &#xff1e;
         </button>
     </div>
 
@@ -91,6 +91,7 @@ export default defineComponent({
 
             if (target.files.length !== 1)
             {
+                alert('now null?')
                 return; // invalid amount of files (or input removed?)
             }
 
