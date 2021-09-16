@@ -52,7 +52,7 @@
         </button>
         <div class="w-0 h-0 invisible"></div>
         <button @click="$router.push({ name: 'method' });" :disabled="page_next_disabled" class="router-btn">
-            3. Training Method &#xff1e;
+            2. Training Method &#xff1e;
         </button>
     </div>
 
@@ -98,6 +98,7 @@ export default defineComponent({
             const file = target.files[0];
             this.file_dataset = file;
 
+/*
             Papa.parse(file, {
 				error: (err, file) => {
 					this.file_dataset_status = "error event";
@@ -108,6 +109,7 @@ export default defineComponent({
                     console.log(results)
 				}
             });
+*/
 
             // https://www.papaparse.com/
         }

@@ -1,25 +1,30 @@
 <template>
   <div>
-    <h1>3. Training Method</h1>
+    <h1>2. Training Method</h1>
 
-    <p class="text-sm">Please select the dataset which you wish to use for training the model. You can also select a previously trained model. Your options are:</p>
-    <ul class="text-sm mt-1 list-disc list-inside leading-6">
-        <li>Train new model based on dataset: only requires selecting a <span class="underline">dataset</span>.</li>
-        <li>Continue training model on (new) dataset: requires selecting a <span class="underline">dataset</span> and <span class="underline">model</span>.</li>
-        <li>Make predictions on model: only requires selecting a <span class="underline">model</span>.</li>
-    </ul>
+    <p class="text-sm">Please select the which you would like to use.</p>
+    <hr class="mt-1 mb-4" />
 
-    <hr class="mt-1" />
+    <div class="grid grid-cols-3 gap-4">
+        <div
+            v-for="method_category in method_library"
+            :key="method_category"
+            class="method-category-block"
+            :class="{'selected': selected_method_category == method_category}"
+            @click="selected_method_category = method_category">
+            <span class="self-center">{{ method_category.name }}</span>
+        </div>
+    </div>
 
-
+    <hr />
 
     <div class="flex justify-between mt-8">
         <button @click="$router.push({ name: 'home' });" class="router-btn">
-            &#xff1c; 2. Feature Configuration
+            &#xff1c; 1. Load
         </button>
         <div class="w-0 h-0 invisible"></div>
         <button @click="$router.push({ name: 'features' });" :disabled="page_next_disabled" class="router-btn">
-            2. Feature Configuration &#xff1e;
+            3. Feature Configuration &#xff1e;
         </button>
     </div>
 
@@ -29,15 +34,48 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
+interface method {
+    name: string,
+    train: void
+}
+
+interface selectable {
+    selected: boolean
+}
+
+interface method_category {
+    name: string;
+    methods: method[];
+}
+
+// type method_library = Array<method_category>;
+
 export default defineComponent({
 
 	data: () => ({
+        method_library: [
+            {
+                name: "supervised",
+                methods: [
+                    require('../learning_methods/supervised/linear_regression')
+                ]
+            },
+            {
+                name: "unsupervised",
+                methods: [
+                    require('../learning_methods/supervised/linear_regression')
+                ]
+            },
+            {
+                name: "deep learning",
+                methods: [
+                    require('../learning_methods/supervised/linear_regression')
+                ]
+            },
+        ] as method_category[],
 
-        ml_methods: {
-            'supervised': [
-                import('../ml_methods/supervised/linear_regression'),
-            ]
-        }
+        selected_method_category: null as method_category | null,
+        selected_method: null as method | null,
 
 	}),
 
@@ -46,7 +84,8 @@ export default defineComponent({
     },
 
     created() {
-        console.log(this.ml_methods)
+        console.log(this.method_library)
+        this.selected_method_category = this.method_library[0];
     },
 
     computed: {
@@ -60,4 +99,13 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+
+.method-category-block {
+    @apply bg-gray-200 border border-gray-300 h-16 flex justify-center cursor-pointer;
+
+    &.selected {
+        @apply bg-blue-200 border-blue-300;
+    }
+}
+
 </style>
