@@ -44,6 +44,24 @@ h1 {
     @apply mb-4 font-bold font-serif text-5xl text-gray-800
 }
 
+.router-btn {
+
+    @apply font-normal px-4 py-1 border-b-4 ;
+    @apply bg-blue-600 border-blue-400 text-white; // default btn style
+
+    &.router-btn-green {
+        @apply bg-green-600 border-green-400 text-white;
+    }
+
+    &[disabled] {
+        // @apply bg-gray-500 border-gray-400 cursor-not-allowed;
+        @apply cursor-not-allowed;
+        opacity: 0.6;
+        // pointer-events: none;
+    }
+
+}
+
 /*
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
