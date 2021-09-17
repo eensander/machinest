@@ -30,7 +30,7 @@
     </div>
 
     <div class="flex justify-between mt-8">
-        <button @click="$router.push({ name: 'home' });" class="router-btn">
+        <button @click="$router.push({ name: 'load' });" class="router-btn">
             &#xff1c; 1. Load
         </button>
         <div class="w-0 h-0 invisible"></div>

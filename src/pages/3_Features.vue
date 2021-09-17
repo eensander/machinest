@@ -26,8 +26,8 @@
     </table>
 
     <div class="flex justify-between mt-8">
-        <button @click="$router.push({ name: 'home' });" class="router-btn">
-            &#xff1c; 1. Load
+        <button @click="$router.push({ name: 'method' });" class="router-btn">
+            &#xff1c; 2. Method
         </button>
         <div class="w-0 h-0 invisible"></div>
         <button @click="$router.push({ name: 'home' });" :disabled="page_next_disabled" class="router-btn">
