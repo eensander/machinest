@@ -11,34 +11,33 @@
 
     <hr class="mt-1" />
 
-    <div class="flex flex-row space-x-4">
+    <div class="flex flex-col md:flex-row md:space-x-4">
 
         <!-- drag n drop  https://codepen.io/stenvdb/pen/wvBoYQO -->
-        <div class="flex-grow mt-4">
+        <div class="md:w-1/2 mt-4">
             <h2 class="text-xl mb-1">Dataset</h2>
-            <input ref="file_dataset" id="file_dataset" class="hidden" type="file" @change="file_dataset_changed($event)">
+            <input ref="file_dataset" id="file_dataset" class="hidden" type="file" @change="file_changed_dataset($event)">
             <div class="bg-gray-50 border border-gray-300 text-center py-6">
                 <label for="file_dataset" class="w-full cursor-pointer">
                     Click <span class="underline">here</span> to select the dataset
                 </label>
                 <div class="w-full" v-if="file_dataset">
                     <span class="align-middle text-sm text-blue-700">{{ file_dataset.name }}</span>
-                    <span class="align-middle ml-2 text-gray-600 cursor-pointer text-xl leading-0" @click="file_dataset_clear()">&times;</span>
+                    <span class="align-middle ml-2 text-gray-600 cursor-pointer text-xl leading-0" @click="file_clear_dataset()">&times;</span>
                 </div>
                 <!-- <span class="text-sm text-gray-500" >{{ file_dataset_status }}</span> -->
             </div>
         </div>
-        <div class="flex-grow mt-4">
+        <div class="md:w-1/2 mt-4">
             <h2 class="text-xl mb-1">Model</h2>
-            <input id="file_model" class="hidden" type="file" @change="file_model_changed($event)">
+            <input ref="file_model" id="file_model" class="hidden" type="file" @change="file_changed_model($event)">
             <div class="bg-gray-50 border border-gray-300 text-center py-6">
-                <label for="file_dataset" class="w-full cursor-pointer">
+                <label for="file_model" class="w-full cursor-pointer">
                     Click <span class="underline">here</span> to select the model
                 </label>
-                <span class="text-sm text-blue-700" v-if="file_model">{{ file_model.name }}</span>
-                <div class="w-full" v-if="file_model" >
+                <div class="w-full" v-if="file_model">
                     <span class="align-middle text-sm text-blue-700">{{ file_model.name }}</span>
-                    <span class="align-middle ml-2 text-gray-600 cursor-pointer text-xl leading-0" @click="file_model_clear()">&times;</span>
+                    <span class="align-middle ml-2 text-gray-600 cursor-pointer text-xl leading-0" @click="file_clear_model()">&times;</span>
                 </div>
                 <!-- <span class="text-sm text-gray-500" >{{ file_model_status }}</span> -->
             </div>
@@ -67,37 +66,25 @@ export default defineComponent({
 
 	data: () => ({
         file_dataset: null as File | null,
-        file_model: null,
+        file_model: null as File | null,
 
         file_dataset_status: "waiting",
         file_model_status: "waiting",
-
 	}),
 
     methods: {
 
-        file_dataset_clear() {
+        file_clear_dataset() {
             (<HTMLInputElement>this.$refs.file_dataset).value = "";
             this.file_dataset = null;
         },
+        file_clear_model() {
+            (<HTMLInputElement>this.$refs.file_model).value = "";
+            this.file_model = null;
+        },
 
-        file_dataset_changed(e: Event) {
-
-            const target = <HTMLInputElement>e.target;
-
-            if (target == null || target.files == null) {
-                return;
-            }
-
-            if (target.files.length !== 1)
-            {
-                alert('now null?')
-                return; // invalid amount of files (or input removed?)
-            }
-
-            const file = target.files[0];
-            this.file_dataset = file;
-
+        file_changed_dataset(e: Event) {
+            this.file_dataset = this.get_file_from_event(e);
 /*
             Papa.parse(file, {
 				error: (err, file) => {
@@ -110,8 +97,31 @@ export default defineComponent({
 				}
             });
 */
-
             // https://www.papaparse.com/
+
+        },
+
+        file_changed_model(e: Event) {
+            this.file_model = this.get_file_from_event(e);
+        },
+
+        get_file_from_event(e: Event): File | null {
+
+            const target = <HTMLInputElement>e.target;
+
+            if (target == null || target.files == null) {
+                return null;
+            }
+
+            if (target.files.length !== 1)
+            {
+                alert('now null?')
+                return null; // invalid amount of files (or input removed?)
+            }
+
+            const file = target.files[0];
+            return file;
+
         }
     },
 
