@@ -60,13 +60,17 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Papa from 'papaparse';
+// import Papa from 'papaparse';
+
+import useFiles from '../store/files';
 
 export default defineComponent({
 
 	data: () => ({
         file_dataset: null as File | null,
         file_model: null as File | null,
+
+		files: useFiles(),
 
         file_dataset_status: "waiting",
         file_model_status: "waiting",
@@ -85,6 +89,7 @@ export default defineComponent({
 
         file_changed_dataset(e: Event) {
             this.file_dataset = this.get_file_from_event(e);
+			
 /*
             Papa.parse(file, {
 				error: (err, file) => {

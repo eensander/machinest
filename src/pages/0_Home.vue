@@ -16,9 +16,33 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import useFiles from '../store/files';
+
+// export default defineComponent({
+// 	setup() {
+// 		alert('a');
+// 	}
+// });
+
+// /*
 export default defineComponent({
 
-});
+	name: "Home",
+
+	setup() { 
+		
+		const files = useFiles()
+		
+		console.log(files)
+
+		files.test.value = "gekkeding";
+
+		return files
+
+	}
+
+})
+// */
 </script>
 
 <style scoped lang="scss">

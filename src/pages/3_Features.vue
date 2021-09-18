@@ -40,7 +40,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Papa from 'papaparse';
+// import Papa from 'papaparse';
 
 type Feature = {
     name: string,
