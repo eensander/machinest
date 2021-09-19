@@ -16,33 +16,24 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import useFiles from '../store/files';
+import useFiles from '@/modules/files';
 
-// export default defineComponent({
-// 	setup() {
-// 		alert('a');
-// 	}
-// });
-
-// /*
 export default defineComponent({
 
 	name: "Home",
 
 	setup() { 
 		
-		const files = useFiles()
-		
-		console.log(files)
+		const files = useFiles()	
 
-		files.test.value = "gekkeding";
+		// files.test.value = "gekkeding";
+		// console.log("AA", files.test.value)
 
 		return files
 
 	}
 
 })
-// */
 </script>
 
 <style scoped lang="scss">

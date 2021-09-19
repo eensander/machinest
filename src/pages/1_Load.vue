@@ -21,8 +21,8 @@
                 <label for="file_dataset" class="w-full cursor-pointer">
                     Click <span class="underline">here</span> to select the dataset
                 </label>
-                <div class="w-full" v-if="file_dataset">
-                    <span class="align-middle text-sm text-blue-700">{{ file_dataset.name }}</span>
+                <div class="w-full" v-if="files.dataset?.value != null">
+                    <span class="align-middle text-sm text-blue-700">{{ files.dataset.value.name }}</span>
                     <span class="align-middle ml-2 text-gray-600 cursor-pointer text-xl leading-0" @click="file_clear_dataset()">&times;</span>
                 </div>
                 <!-- <span class="text-sm text-gray-500" >{{ file_dataset_status }}</span> -->
@@ -35,8 +35,8 @@
                 <label for="file_model" class="w-full cursor-pointer">
                     Click <span class="underline">here</span> to select the model
                 </label>
-                <div class="w-full" v-if="file_model">
-                    <span class="align-middle text-sm text-blue-700">{{ file_model.name }}</span>
+                <div class="w-full" v-if="files.model?.value != null">
+                    <span class="align-middle text-sm text-blue-700">{{ files.model.value.name }}</span>
                     <span class="align-middle ml-2 text-gray-600 cursor-pointer text-xl leading-0" @click="file_clear_model()">&times;</span>
                 </div>
                 <!-- <span class="text-sm text-gray-500" >{{ file_model_status }}</span> -->
@@ -44,6 +44,10 @@
         </div>
 
     </div>
+
+	<button @click="dologthings(files.dataset)" :disabled="page_next_disabled" class="router-btn mt-2">
+            Do something
+        </button>
 
     <div class="flex justify-between mt-8">
         <button @click="$router.push({ name: 'home' });" class="router-btn">
@@ -59,23 +63,96 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref, Ref, computed } from 'vue';
 // import Papa from 'papaparse';
 
-import useFiles from '../store/files';
+import useFiles from '@/modules/files';
+//import { Options, Vue,setup  } from 'vue-class-component';
 
 export default defineComponent({
 
+	setup() {
+
+		const files = useFiles();
+		// const { dataset, model } = useFiles();
+
+		const html_file_dataset = ref(null) as Ref<HTMLInputElement | null>
+		const html_file_model = ref(null) as Ref<HTMLInputElement | null>
+
+		const get_file_from_event = (e: Event): File | null => {
+
+			const target = <HTMLInputElement>e.target;
+
+			if (target == null || target.files == null) {
+				return null;
+			}
+
+			if (target.files.length !== 1)
+			{
+				alert('now null?')
+				return null; // invalid amount of files (or input removed?)
+			}
+
+			const file = target.files[0];
+			return file;
+
+		}
+
+		const file_changed_dataset = (e: Event) => {
+			files.dataset.value = get_file_from_event(e);
+			// console.log("set dataset to: ");
+			// console.log(files.dataset, files.dataset.value)
+		}
+        const file_changed_model = (e: Event) => {
+            files.model.value = get_file_from_event(e);
+        }
+
+		const file_clear_dataset = () => {
+			if(html_file_dataset.value != null)
+				html_file_dataset.value.value = "";
+			files.dataset.value = null;
+		}
+
+		const file_clear_model = () => {
+			if(html_file_model.value != null)
+				html_file_model.value.value = "";
+			files.model.value = null;
+		}
+
+		const page_next_disabled = computed( () => false )
+
+
+		const dologthings = (what: any): void => {
+			console.log(what)
+		}
+	
+		return {
+
+			files,
+
+			file_changed_dataset,
+			file_changed_model,
+
+			file_clear_dataset,
+			file_clear_model,
+
+			page_next_disabled,
+
+			dologthings,
+
+		}
+	
+	},
+
+/*
 	data: () => ({
         file_dataset: null as File | null,
         file_model: null as File | null,
 
-		files: useFiles(),
-
         file_dataset_status: "waiting",
         file_model_status: "waiting",
 	}),
-
+*./
     methods: {
 
         file_clear_dataset() {
@@ -101,7 +178,7 @@ export default defineComponent({
                     console.log(results)
 				}
             });
-*/
+*./
             // https://www.papaparse.com/
 
         },
@@ -129,13 +206,15 @@ export default defineComponent({
 
         }
     },
+*/
 
+/*
     computed: {
         page_next_disabled() {
             return this.file_dataset == null && this.file_model == null;
         }
     }
-
+*/
 });
 </script>
 
