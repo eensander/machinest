@@ -1,25 +1,17 @@
-import { reactive, Ref, toRefs } from "vue"
+// import { reactive, ref, Ref, toRefs } from "vue"
 
-export interface training_method {
-    name: string,
-    train: void
+import { TrainingMethodCategory } from '../types'
+
+interface UseTrainingMethods {
+	library: TrainingMethodCategory[],
 }
 
-export interface training_method_category {
-    name: string;
-    methods: training_method[];
-}
-
-interface IUseTrainingMethods {
-	method_library: Ref<training_method_category[]>,
-
-}
-
+/*)
 const state = reactive({
-	method_library: [
+	library: [
 		{
 			name: "supervised",
-			methods: [
+			methods:  [
 				// (await import('../learning_methods/supervised/linear_regression')).default,
 				// (await import('../learning_methods/supervised/linear_regression')).default,
 			]
@@ -38,7 +30,13 @@ const state = reactive({
 		},
 	],
 })
+*/
 
-export default function useTrainingMethods(): IUseTrainingMethods {
-	return toRefs(state)
+import training_methods from "@/training_methods";
+
+export default function useTrainingMethods(): UseTrainingMethods {
+	// return toRefs(state)
+	return {
+		library: training_methods
+	}	
 }

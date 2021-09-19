@@ -16,7 +16,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import useFiles from '@/modules/files';
+
+import useConfig from '@/composables/useConfig';
 
 export default defineComponent({
 
@@ -24,12 +25,12 @@ export default defineComponent({
 
 	setup() { 
 		
-		const files = useFiles()	
+		const config = useConfig()	
 
 		// files.test.value = "gekkeding";
 		// console.log("AA", files.test.value)
 
-		return files
+		return config
 
 	}
 

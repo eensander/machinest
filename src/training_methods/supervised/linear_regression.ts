@@ -1,4 +1,6 @@
-export default {
+import {TrainingMethod} from '@/composables/types'
+
+export default <TrainingMethod> {
 
 	name: "(Multiple) Linear Regression",
 

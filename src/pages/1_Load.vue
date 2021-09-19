@@ -21,8 +21,8 @@
                 <label for="file_dataset" class="w-full cursor-pointer">
                     Click <span class="underline">here</span> to select the dataset
                 </label>
-                <div class="w-full" v-if="files.dataset?.value != null">
-                    <span class="align-middle text-sm text-blue-700">{{ files.dataset.value.name }}</span>
+                <div class="w-full" v-if="config.files.dataset?.value != null">
+                    <span class="align-middle text-sm text-blue-700">{{ config.files.dataset.value?.name }}</span>
                     <span class="align-middle ml-2 text-gray-600 cursor-pointer text-xl leading-0" @click="file_clear_dataset()">&times;</span>
                 </div>
                 <!-- <span class="text-sm text-gray-500" >{{ file_dataset_status }}</span> -->
@@ -35,8 +35,8 @@
                 <label for="file_model" class="w-full cursor-pointer">
                     Click <span class="underline">here</span> to select the model
                 </label>
-                <div class="w-full" v-if="files.model?.value != null">
-                    <span class="align-middle text-sm text-blue-700">{{ files.model.value.name }}</span>
+                <div class="w-full" v-if="config.files.model?.value != null">
+                    <span class="align-middle text-sm text-blue-700">{{ config.files.model.value.name }}</span>
                     <span class="align-middle ml-2 text-gray-600 cursor-pointer text-xl leading-0" @click="file_clear_model()">&times;</span>
                 </div>
                 <!-- <span class="text-sm text-gray-500" >{{ file_model_status }}</span> -->
@@ -45,7 +45,7 @@
 
     </div>
 
-	<button @click="dologthings(files.dataset)" :disabled="page_next_disabled" class="router-btn mt-2">
+	<button @click="dologthings(config.files.dataset)" :disabled="page_next_disabled" class="router-btn mt-2">
             Do something
         </button>
 
@@ -66,14 +66,14 @@
 import { defineComponent, ref, Ref, computed } from 'vue';
 // import Papa from 'papaparse';
 
-import useFiles from '@/modules/files';
+import useConfig from '@/composables/useConfig';
 //import { Options, Vue,setup  } from 'vue-class-component';
 
 export default defineComponent({
 
 	setup() {
 
-		const files = useFiles();
+		const config = useConfig();
 		// const { dataset, model } = useFiles();
 
 		const html_file_dataset = ref(null) as Ref<HTMLInputElement | null>
@@ -99,24 +99,24 @@ export default defineComponent({
 		}
 
 		const file_changed_dataset = (e: Event) => {
-			files.dataset.value = get_file_from_event(e);
+			config.files.dataset.value = get_file_from_event(e);
 			// console.log("set dataset to: ");
 			// console.log(files.dataset, files.dataset.value)
 		}
         const file_changed_model = (e: Event) => {
-            files.model.value = get_file_from_event(e);
+            config.files.model.value = get_file_from_event(e);
         }
 
 		const file_clear_dataset = () => {
 			if(html_file_dataset.value != null)
 				html_file_dataset.value.value = "";
-			files.dataset.value = null;
+			config.files.dataset.value = null;
 		}
 
 		const file_clear_model = () => {
 			if(html_file_model.value != null)
 				html_file_model.value.value = "";
-			files.model.value = null;
+			config.files.model.value = null;
 		}
 
 		const page_next_disabled = computed( () => false )
@@ -128,7 +128,7 @@ export default defineComponent({
 	
 		return {
 
-			files,
+			config,
 
 			file_changed_dataset,
 			file_changed_model,

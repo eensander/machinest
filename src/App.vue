@@ -4,6 +4,19 @@
             <!-- <img class="" alt="Vue logo" src="./assets/logo.png"> -->
             <span class="text-5xl uppercase font-bold text-blue-800">Machinest</span>
         </div>
+		
+		<table class="styled-table">
+			<tbody>
+				<tr>
+					<th>Test:</th>
+					<td>{{ config.test.value }}</td>
+				</tr>
+				<tr>
+					<th>Training Method:</th>
+					<td>{{ config.training_method.value }}</td>
+				</tr>
+			</tbody>
+		</table>
 
         <router-view></router-view>
     </div>
@@ -12,18 +25,21 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
+import useConfig from '@/composables/useConfig';
+
 export default defineComponent({
-	name: 'App',
 
-	data: () => ({
-        //
-	}),
+	name: "App",
 
-    methods: {
-        //
-    },
-});
+	setup() { 
+		const config = useConfig()
 
+		return {
+			config
+		}
+	}
+
+})
 </script>
 
 <style lang="scss">
@@ -36,7 +52,7 @@ html {
 
 #main {
     @apply md:mx-auto mx-2 px-4 max-w-4xl flex flex-col h-screen ;
-    @apply border border-gray-200;
+    // @apply border border-gray-200;
 }
 
 
@@ -85,6 +101,7 @@ table.styled-table {
         tr {
             th {
                 @apply bg-gray-100 border-t border-gray-200 px-6 py-2 text-gray-700 font-bold tracking-wider uppercase text-xs;
+				width: 1/6%;
             }
             td {
                 @apply border-dashed border-t border-gray-200 ;
