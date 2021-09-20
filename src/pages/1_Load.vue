@@ -5,8 +5,8 @@
     <p class="text-sm">Please select the dataset which you wish to use for training the model. You can also select a previously trained model. Your options are:</p>
     <ul class="text-sm mt-1 list-disc list-inside leading-6">
         <li>Train new model based on dataset: only requires selecting a <span class="underline">dataset</span>.</li>
-        <li>Continue training model on (new) dataset: requires selecting a <span class="underline">dataset</span> and <span class="underline">model</span>.</li>
         <li>Make predictions on model: only requires selecting a <span class="underline">model</span>.</li>
+        <li>Continue training model on (new) dataset: requires selecting a <span class="underline">dataset</span> and <span class="underline">model</span>.</li>
     </ul>
 
     <hr class="mt-1" />
@@ -42,21 +42,32 @@
                 <!-- <span class="text-sm text-gray-500" >{{ file_model_status }}</span> -->
             </div>
         </div>
-
     </div>
 
+<!-- 
 	<button @click="dologthings(config.files.dataset)" :disabled="page_next_disabled" class="router-btn mt-2">
             Do something
-        </button>
+    </button> -->
 
-    <div class="flex justify-between mt-8">
-        <button @click="$router.push({ name: 'home' });" class="router-btn">
+    <div class="flex flex-col md:flex-row items-start justify-between mt-8">
+        <button @click="$router.push({ name: 'home' });" class="router-btn mb-2 md:mb-0">
             &#xff1c; Home
         </button>
         <div class="w-0 h-0 invisible"></div>
-        <button @click="$router.push({ name: 'method' });" :disabled="page_next_disabled" class="router-btn">
-            2. Training Method &#xff1e;
-        </button>
+		<div class="flex flex-col space-y-2 md:items-end">
+			<button v-if="config.files.model?.value === null && config.files.dataset?.value === null" disabled="true" class="router-btn">
+				Load dataset or model
+			</button>
+			<button v-if="config.files.dataset?.value !== null" @click="$router.push({ name: 'method' });" :disabled="page_next_disabled" class="router-btn">
+				2. Create new model using <u>dataset</u>
+			</button>
+			<button v-if="config.files.model?.value !== null" @click="$router.push({ name: 'method' });" :disabled="page_next_disabled" class="router-btn">
+				2. Make predictions on <u>model</u>
+			</button>
+			<button v-if="config.files.model?.value !== null && config.files.dataset?.value !== null" @click="$router.push({ name: 'method' });" :disabled="page_next_disabled" class="router-btn">
+				2. Continue training <u>model</u> using <u>dataset</u>
+			</button>
+		</div>
     </div>
 
   </div>
@@ -120,11 +131,6 @@ export default defineComponent({
 		}
 
 		const page_next_disabled = computed( () => false )
-
-
-		const dologthings = (what: any): void => {
-			console.log(what)
-		}
 	
 		return {
 
@@ -137,9 +143,7 @@ export default defineComponent({
 			file_clear_model,
 
 			page_next_disabled,
-
-			dologthings,
-
+			
 		}
 	
 	},

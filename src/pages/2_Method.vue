@@ -5,11 +5,6 @@
     <p class="text-sm">Please select the which you would like to use.</p>
     <hr class="mt-1 mb-4" />
 
-	<button class="router-btn" @click="config.test.value += 'nice '">do something</button>
-	<span>{{ config.test.value }}</span>
-
-	<span>{{ config.files.dataset.value?.name }}</span>
-
 	<button @click="dataset_parse">Parse!</button>
 	<textarea :value="parsed_status"></textarea>
 
