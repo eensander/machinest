@@ -79,15 +79,18 @@
 
 <script lang="ts">
 import { defineComponent, ref, Ref, computed } from 'vue';
-import Papa from 'papaparse';
 
+import { useToast } from "vue-toastification";
 import useConfig from '@/composables/useConfig';
+
+import Papa from 'papaparse';
 
 export default defineComponent({
 
 	setup() {
 
 		const config = useConfig();
+		const toast = useToast()
 
 		const html_file_dataset = ref(null) as Ref<HTMLInputElement | null>
 		const html_file_model = ref(null) as Ref<HTMLInputElement | null>
@@ -129,10 +132,28 @@ export default defineComponent({
 			config.files.model.value = null;
 		}
 
-		const parse_dataset_progress = ref(null) as Ref<bigint | null>
-		const parse_dataset = () => {
+		const parse_dataset_progress = ref(null) as Ref<number | null>
+		const parse_dataset = async () => {
+			parse_dataset_progress.value = 0;
+			if (config.files.dataset.value !== null)
+			{
+				await Papa.parse(config.files.dataset.value, {
+					error: (err, file) => {
+						// this.file_dataset_status = "error event";
+						console.log("ERROR:", err, file);
+					},
+					complete: (results) => {
+						// this.file_dataset_status = "complete event";
+						console.log("PARSED.", results);
+						console.log(results.data[0]);
+						parse_dataset_progress.value = 100
+					}
+				});
+			}
+			toast("Failed parsing dataset")
 			return false;
 		}
+		const parse_model_progress = ref(null) as Ref<number | null>
 		const parse_model = () => {
 			return false;
 		}
@@ -148,6 +169,11 @@ export default defineComponent({
 
 			file_clear_dataset,
 			file_clear_model,
+
+			parse_dataset_progress,
+			parse_dataset,
+			parse_model_progress,
+			parse_model,
 
 			page_next_disabled,
 			

@@ -41,7 +41,7 @@
             &#xff1c; 1. Load
         </button>
         <div class="w-0 h-0 invisible"></div>
-        <button @click="$router.push({ name: 'features' });" :disabled="page_next_disabled" class="router-btn">
+        <button @click="$router.push({ name: 'features' });" :disabled="config.training_method.value == method" class="router-btn">
             3. Feature Configuration &#xff1e;
         </button>
     </div>
@@ -130,7 +130,7 @@ export default defineComponent({
 <style scoped lang="scss">
 
 .method-category-block {
-    @apply bg-gray-100 border border-gray-300 h-16 flex justify-center cursor-pointer text-gray-800;
+    @apply select-none bg-gray-100 border border-gray-300 h-16 flex justify-center cursor-pointer text-gray-800;
 
     &.selected {
         @apply bg-blue-100 border-blue-400 text-gray-900;
@@ -138,7 +138,7 @@ export default defineComponent({
 }
 
 .method-block {
-    @apply bg-gray-100 border border-gray-300 h-16 flex justify-center cursor-pointer text-gray-800;
+    @apply select-none bg-gray-100 border border-gray-300 h-16 flex justify-center cursor-pointer text-gray-800;
 
     &.selected {
         @apply bg-blue-100 border-blue-400 text-gray-900;

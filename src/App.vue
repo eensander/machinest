@@ -4,7 +4,8 @@
             <!-- <img class="" alt="Vue logo" src="./assets/logo.png"> -->
             <span class="text-5xl uppercase font-bold text-blue-800">Machinest</span>
         </div>
-<!-- 
+		
+		<!-- 
 		<div>
 			<ul id="breadcrumb">
 				<li><a href="#">Test</a></li>
@@ -12,6 +13,7 @@
 			</ul>
 		</div>
 		-->
+
 		<table class="styled-table hidden">
 			<tbody>
 				<tr>

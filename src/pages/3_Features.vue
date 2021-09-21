@@ -4,7 +4,7 @@
 
     <p class="text-sm">Here you can configure each feature from the dataset which you supplied</p>
 
-    <hr class="mt-1" />
+    <hr class="my-4" >
 
     <table class="styled-table">
         <thead>
@@ -20,7 +20,10 @@
                 <td colspan="4">Loading...</td>
             </tr>
             <tr v-else-if="features.length == 0">
-                <td colspan="4">No features available in dataset...</td>
+                <td colspan="4">No features available in dataset [refetch]...</td>
+            </tr>
+            <tr v-else v-for="feature in features" :key="feature">
+                <td>{{ feature.name }}</td>
             </tr>
         </tbody>
     </table>
@@ -41,26 +44,27 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 // import Papa from 'papaparse';
+import useConfig from '@/composables/useConfig'
 
 import { Feature } from '@/composables/types'
 
 export default defineComponent({
 
-	data: () => ({
-        features: null as Feature[] | null
-	}),
+	setup() {
 
-    methods: {
+		const config = useConfig()
 
-    },
+		if (config.features === null)
+		{
+			config.features
+		}
+		
+		return {
+			config,
+		}
 
-    computed: {
-        page_next_disabled() {
-            // return this.file_dataset == null && this.file_model == null;
-            return false;
-        }
-    }
-
+	}
+	
 });
 </script>
 
