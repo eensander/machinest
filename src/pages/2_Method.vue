@@ -4,11 +4,11 @@
 
     <p class="text-sm">Please select the which you would like to use.</p>
     <hr class="mt-1 mb-4" />
-
+<!-- 
 	<button @click="dataset_parse">Parse!</button>
 	<textarea :value="parsed_status"></textarea>
 
-	<hr class="my-4">
+	<hr class="my-4"> -->
 
     <div class="grid grid-cols-3 gap-4">
         <div
@@ -79,13 +79,7 @@ export default defineComponent({
 
 		const training_methods = useTrainingMethods()
 
-		// const selected = {
-		// 	method_category: null as TrainingMethodCategory | null,
-		// 	method: null as TrainingMethod | null,
-		// }
-
 		const page_next_disabled = computed( () => config.files.dataset == null && config.files.model == null )
-		// const page_next_disabled = ref( false )
 
 		const parsed_status = ref<string>()
 
@@ -118,8 +112,6 @@ export default defineComponent({
 			config,
 			training_methods,
 
-			// selected,
-
 			page_next_disabled,
 
 			parsed_status,
@@ -131,13 +123,6 @@ export default defineComponent({
 		}
 
 	},
-
-/*
-    created() {
-        console.log(this.method_library)
-        // this.selected_method_category = this.method_library[0];
-    },
-*/
 
 });
 </script>

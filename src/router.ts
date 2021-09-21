@@ -7,12 +7,18 @@ import Home from './pages/0_Home.vue';
 import Load from './pages/1_Load.vue';
 import Method from './pages/2_Method.vue';
 import Features from './pages/3_Features.vue';
+import Clean from './pages/4_Clean.vue';
+import Train from './pages/5_Train.vue';
+import Predict from './pages/6_Predict.vue';
 
 const routes = [
 	{ name: 'home', path: '/', component: Home },
 	{ name: 'load', path: '/load', component: Load },
 	{ name: 'method', path: '/method', component: Method },
 	{ name: 'features', path: '/features', component: Features },
+	{ name: 'clean', path: '/clean', component: Clean },
+	{ name: 'train', path: '/train', component: Train },
+	{ name: 'predict', path: '/predict', component: Predict },
 ]
 
 const router = VueRouter.createRouter({

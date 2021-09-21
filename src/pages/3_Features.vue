@@ -30,8 +30,8 @@
             &#xff1c; 2. Method
         </button>
         <div class="w-0 h-0 invisible"></div>
-        <button @click="$router.push({ name: 'home' });" :disabled="page_next_disabled" class="router-btn">
-            4. Data Cleaning &#xff1e;
+        <button @click="$router.push({ name: 'cleaning' });" :disabled="page_next_disabled" class="router-btn">
+            4. Clean Data &#xff1e;
         </button>
     </div>
 
@@ -42,11 +42,6 @@
 import { defineComponent } from 'vue';
 // import Papa from 'papaparse';
 
-type Feature = {
-    name: string,
-    datatype: string,
-    dependant: boolean,
-}
 
 export default defineComponent({
 

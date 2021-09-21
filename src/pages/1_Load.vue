@@ -58,34 +58,36 @@
 			<button v-if="config.files.model?.value === null && config.files.dataset?.value === null" disabled="true" class="router-btn">
 				Load dataset or model
 			</button>
-			<button v-if="config.files.dataset?.value !== null" @click="$router.push({ name: 'method' });" :disabled="page_next_disabled" class="router-btn">
+			<button v-if="config.files.dataset?.value !== null" @click="parse_dataset() && $router.push({ name: 'method' });" class="router-btn">
 				2. Create new model using <u>dataset</u>
 			</button>
-			<button v-if="config.files.model?.value !== null" @click="$router.push({ name: 'method' });" :disabled="page_next_disabled" class="router-btn">
-				2. Make predictions on <u>model</u>
+			<button v-if="config.files.model?.value !== null" @click="parse_dataset() && $router.push({ name: 'predict' });" class="router-btn">
+				6. Make predictions on <u>model</u>
 			</button>
-			<button v-if="config.files.model?.value !== null && config.files.dataset?.value !== null" @click="$router.push({ name: 'method' });" :disabled="page_next_disabled" class="router-btn">
-				2. Continue training <u>model</u> using <u>dataset</u>
+			<button
+				v-if="config.files.model?.value !== null && config.files.dataset?.value !== null" 
+				@click="parse_dataset() && parse_model() && $router.push({ name: 'train' });" 
+				class="router-btn"
+			>
+				5. Continue training <u>model</u> using <u>dataset</u>
 			</button>
 		</div>
     </div>
 
   </div>
-</template>
+</template>welke aspecten van otnwikkelen bespreek je daar
 
 <script lang="ts">
 import { defineComponent, ref, Ref, computed } from 'vue';
-// import Papa from 'papaparse';
+import Papa from 'papaparse';
 
 import useConfig from '@/composables/useConfig';
-//import { Options, Vue,setup  } from 'vue-class-component';
 
 export default defineComponent({
 
 	setup() {
 
 		const config = useConfig();
-		// const { dataset, model } = useFiles();
 
 		const html_file_dataset = ref(null) as Ref<HTMLInputElement | null>
 		const html_file_model = ref(null) as Ref<HTMLInputElement | null>
@@ -111,8 +113,6 @@ export default defineComponent({
 
 		const file_changed_dataset = (e: Event) => {
 			config.files.dataset.value = get_file_from_event(e);
-			// console.log("set dataset to: ");
-			// console.log(files.dataset, files.dataset.value)
 		}
         const file_changed_model = (e: Event) => {
             config.files.model.value = get_file_from_event(e);
@@ -123,11 +123,17 @@ export default defineComponent({
 				html_file_dataset.value.value = "";
 			config.files.dataset.value = null;
 		}
-
 		const file_clear_model = () => {
 			if(html_file_model.value != null)
 				html_file_model.value.value = "";
 			config.files.model.value = null;
+		}
+
+		const parse_dataset = () => {
+			return false;
+		}
+		const parse_model = () => {
+			return false;
 		}
 
 		const page_next_disabled = computed( () => false )
@@ -148,77 +154,6 @@ export default defineComponent({
 	
 	},
 
-/*
-	data: () => ({
-        file_dataset: null as File | null,
-        file_model: null as File | null,
-
-        file_dataset_status: "waiting",
-        file_model_status: "waiting",
-	}),
-*./
-    methods: {
-
-        file_clear_dataset() {
-            (<HTMLInputElement>this.$refs.file_dataset).value = "";
-            this.file_dataset = null;
-        },
-        file_clear_model() {
-            (<HTMLInputElement>this.$refs.file_model).value = "";
-            this.file_model = null;
-        },
-
-        file_changed_dataset(e: Event) {
-            this.file_dataset = this.get_file_from_event(e);
-			
-/*
-            Papa.parse(file, {
-				error: (err, file) => {
-					this.file_dataset_status = "error event";
-					console.log("ERROR:", err, file);
-				},
-				complete: (results) => {
-                    this.file_dataset_status = "complete event";
-                    console.log(results)
-				}
-            });
-*./
-            // https://www.papaparse.com/
-
-        },
-
-        file_changed_model(e: Event) {
-            this.file_model = this.get_file_from_event(e);
-        },
-
-        get_file_from_event(e: Event): File | null {
-
-            const target = <HTMLInputElement>e.target;
-
-            if (target == null || target.files == null) {
-                return null;
-            }
-
-            if (target.files.length !== 1)
-            {
-                alert('now null?')
-                return null; // invalid amount of files (or input removed?)
-            }
-
-            const file = target.files[0];
-            return file;
-
-        }
-    },
-*/
-
-/*
-    computed: {
-        page_next_disabled() {
-            return this.file_dataset == null && this.file_model == null;
-        }
-    }
-*/
 });
 </script>
 

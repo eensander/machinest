@@ -27,11 +27,11 @@
 
     <div class="flex justify-between mt-8">
         <button @click="$router.push({ name: 'method' });" class="router-btn">
-            &#xff1c; 2. Method
+            &#xff1c; 3. Features
         </button>
         <div class="w-0 h-0 invisible"></div>
-        <button @click="$router.push({ name: 'home' });" :disabled="page_next_disabled" class="router-btn">
-            4. Data Cleaning &#xff1e;
+        <button @click="$router.push({ name: 'train' });" :disabled="page_next_disabled" class="router-btn">
+            5. Train Model &#xff1e;
         </button>
     </div>
 
