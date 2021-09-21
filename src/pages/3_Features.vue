@@ -42,6 +42,7 @@
 import { defineComponent } from 'vue';
 // import Papa from 'papaparse';
 
+import { Feature } from '@/composables/types'
 
 export default defineComponent({
 

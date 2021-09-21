@@ -129,6 +129,7 @@ export default defineComponent({
 			config.files.model.value = null;
 		}
 
+		const parse_dataset_progress = ref(null) as Ref<bigint | null>
 		const parse_dataset = () => {
 			return false;
 		}
