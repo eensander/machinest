@@ -9,7 +9,7 @@
         <li>Continue training model on (new) dataset: requires selecting a <span class="underline">dataset</span> and <span class="underline">model</span>.</li>
     </ul>
 
-    <hr class="mt-1" />
+    <hr class="my-4" />
 
     <div class="flex flex-col md:flex-row md:space-x-4">
 
@@ -61,21 +61,21 @@
 			<button v-if="config.files.dataset?.value !== null" @click="parse_dataset() && $router.push({ name: 'method' });" class="router-btn">
 				2. Create new model using <u>dataset</u>
 			</button>
-			<button v-if="config.files.model?.value !== null" @click="parse_dataset() && $router.push({ name: 'predict' });" class="router-btn">
+			<button v-if="config.files.model?.value !== null" @click="parse_model() && $router.push({ name: 'predict' });" class="router-btn">
 				6. Make predictions on <u>model</u>
 			</button>
 			<button
 				v-if="config.files.model?.value !== null && config.files.dataset?.value !== null" 
-				@click="parse_dataset() && parse_model() && $router.push({ name: 'train' });" 
+				@click="parse_dataset() && parse_model() && $router.push({ name: 'clean' });" 
 				class="router-btn"
 			>
-				5. Continue training <u>model</u> using <u>dataset</u>
+				4. Clean to continue training <u>model</u> using <u>dataset</u>
 			</button>
 		</div>
     </div>
 
   </div>
-</template>welke aspecten van otnwikkelen bespreek je daar
+</template>
 
 <script lang="ts">
 import { defineComponent, ref, Ref, computed } from 'vue';
@@ -89,7 +89,7 @@ export default defineComponent({
 
 	setup() {
 
-		const config = useConfig();
+		const config = useConfig()
 		const toast = useToast()
 
 		const html_file_dataset = ref(null) as Ref<HTMLInputElement | null>
@@ -97,7 +97,7 @@ export default defineComponent({
 
 		const get_file_from_event = (e: Event): File | null => {
 
-			const target = <HTMLInputElement>e.target;
+			const target = <HTMLInputElement>e.target
 
 			if (target == null || target.files == null) {
 				return null;
@@ -150,7 +150,6 @@ export default defineComponent({
 					}
 				});
 			}
-			toast("Failed parsing dataset")
 			return false;
 		}
 		const parse_model_progress = ref(null) as Ref<number | null>

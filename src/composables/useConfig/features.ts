@@ -1,5 +1,8 @@
-import { ref } from "vue"
+import { Ref, ref } from "vue"
+import { Feature } from "../types"
 import { UseConfig } from './index'
+
+export type FeaturesConfig = { features: Ref<Feature[] | null> }
 
 const features = ref(null)
 
@@ -9,7 +12,8 @@ export function refreshFeatures(config: UseConfig): void {
 	// 2. push returning features onto config
 	// 3. profit?
 
-	config.features
+	// config.features
+	console.log(features)
 }
 
 export default features

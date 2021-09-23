@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>2. Feature Configuration</h1>
+    <h1>3. Feature Configuration</h1>
 
     <p class="text-sm">Here you can configure each feature from the dataset which you supplied</p>
 
@@ -33,7 +33,7 @@
             &#xff1c; 2. Method
         </button>
         <div class="w-0 h-0 invisible"></div>
-        <button @click="$router.push({ name: 'cleaning' });" :disabled="page_next_disabled" class="router-btn">
+        <button @click="$router.push({ name: 'clean' });" :disabled="page_next_disabled" class="router-btn">
             4. Clean Data &#xff1e;
         </button>
     </div>
@@ -43,7 +43,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-// import Papa from 'papaparse';
 import useConfig from '@/composables/useConfig'
 
 import { Feature } from '@/composables/types'

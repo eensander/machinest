@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h1>2. Feature Configuration</h1>
+    <h1>4. Data Cleaning</h1>
 
     <p class="text-sm">Here you can configure each feature from the dataset which you supplied</p>
 
-    <hr class="mt-1" />
+    <hr class="my-4" />
 
     <table class="styled-table">
         <thead>
@@ -26,7 +26,7 @@
     </table>
 
     <div class="flex justify-between mt-8">
-        <button @click="$router.push({ name: 'method' });" class="router-btn">
+        <button @click="$router.push({ name: 'features' });" class="router-btn">
             &#xff1c; 3. Features
         </button>
         <div class="w-0 h-0 invisible"></div>
@@ -40,6 +40,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import useConfig from '@/composables/useConfig';
 // import Papa from 'papaparse';
 
 type Feature = {
@@ -50,20 +51,20 @@ type Feature = {
 
 export default defineComponent({
 
-	data: () => ({
-        features: null as Feature[] | null
-	}),
+	setup() {
 
-    methods: {
+		const config = useConfig()
 
-    },
+		if (config.features === null)
+		{
+			config.features
+		}
+		
+		return {
+			config,
+		}
 
-    computed: {
-        page_next_disabled() {
-            // return this.file_dataset == null && this.file_model == null;
-            return false;
-        }
-    }
+	}
 
 });
 </script>

@@ -20,7 +20,6 @@ export enum FeatureDataType {
 	NOMINAL,
 }
 
-
 export interface Feature {
     name: string,
     datatype: String,

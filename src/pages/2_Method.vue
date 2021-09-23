@@ -3,7 +3,9 @@
     <h1>2. Training Method</h1>
 
     <p class="text-sm">Please select the which you would like to use.</p>
-    <hr class="mt-1 mb-4" />
+	
+    <hr class="my-4" />
+	
 <!-- 
 	<button @click="dataset_parse">Parse!</button>
 	<textarea :value="parsed_status"></textarea>

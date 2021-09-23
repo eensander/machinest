@@ -1,29 +1,27 @@
 <template>
   <div>
-    <h1>2. Feature Configuration</h1>
+    <h1>6. Predict</h1>
 
-    <p class="text-sm">Here you can configure each feature from the dataset which you supplied</p>
+    <p class="text-sm">This page allows you to predict dependant values by providing independant values</p>
 
     <hr class="mt-1" />
 
-    <table class="styled-table">
-        <thead>
-            <tr>
-                <th>Feature</th>
-                <th>DataType</th>
-                <th>Dependant</th>
-                <th>Independant</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-if="features == null">
-                <td colspan="4">Loading...</td>
-            </tr>
-            <tr v-else-if="features.length == 0">
-                <td colspan="4">No features available in dataset...</td>
-            </tr>
-        </tbody>
-    </table>
+	<div class="flex flex-row space-x-4">
+		<table class="w-1/2 styled-table">
+			<thead>
+				<tr>
+					<th>Feature</th>
+					<th>Value</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>[Feature-name]</th>
+					<td>[Feature-value]</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 
     <div class="flex justify-between mt-8">
         <button @click="$router.push({ name: 'method' });" class="router-btn">
@@ -40,30 +38,25 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-// import Papa from 'papaparse';
+import useConfig from '@/composables/useConfig';
 
-type Feature = {
-    name: string,
-    datatype: string,
-    dependant: boolean,
-}
 
 export default defineComponent({
+	
+	setup() {
 
-	data: () => ({
-        features: null as Feature[] | null
-	}),
+		const config = useConfig()
 
-    methods: {
+		if (config.features === null)
+		{
+			config.features
+		}
+		
+		return {
+			config,
+		}
 
-    },
-
-    computed: {
-        page_next_disabled() {
-            // return this.file_dataset == null && this.file_model == null;
-            return false;
-        }
-    }
+	}
 
 });
 </script>

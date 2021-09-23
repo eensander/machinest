@@ -5,35 +5,27 @@ import { ParseConfig } from 'papaparse'
 
 // import { default as useTrainingMethods } from '../useTrainingMethods'
 
-export interface UseConfig {
-	files: {
-		dataset: Ref<File | null>,
-		model: Ref<File | null>,
-	},
 
-	dataset_config: Ref<ParseConfig>
-
-	training_method_category: Ref<TrainingMethodCategory | null>,
-	training_method: Ref<TrainingMethod | null>,
-	
-	features: Ref<Feature[] | null>,
-
-	test: Ref<string | null>,
-}
-
-const files = {
-	dataset: ref(null),
-	model: ref(null),
-}
+import { default as features, FeaturesConfig } from './features'
+import { default as files, FilesConfig } from './files'
 
 const dataset_config = ref({})
 
 const training_method_category = ref(null)
 const training_method = ref(null)
 
-import features from './features'
-
 const test = ref(null)
+
+export interface UseConfig extends FeaturesConfig, FilesConfig {
+
+	dataset_config: Ref<ParseConfig>
+
+	training_method_category: Ref<TrainingMethodCategory | null>,
+	training_method: Ref<TrainingMethod | null>,
+
+	test: Ref<string | null>,
+	
+}
 
 export default function useConfig(): UseConfig {
 	// return toRefs(state)
