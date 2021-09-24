@@ -5,7 +5,7 @@
     <p class="text-sm">Please select the which you would like to use.</p>
 	
     <hr class="my-4" />
-	
+
 <!-- 
 	<button @click="dataset_parse">Parse!</button>
 	<textarea :value="parsed_status"></textarea>
@@ -119,9 +119,9 @@ export default defineComponent({
 			parsed_status,
 			dataset_parse,
 
-			dologthings: (what: any): void => {
-				console.log(what)
-			},
+			// dologthings: (what: any): void => {
+			// 	console.log(what)
+			// },
 		}
 
 	},

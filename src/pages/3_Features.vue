@@ -10,21 +10,32 @@
         <thead>
             <tr>
                 <th>Feature</th>
-                <th>DataType</th>
-                <th>Dependant</th>
-                <th>Independant</th>
+                <th>Measurability</th>
+                <th>Is dependant </th>
+                <!-- <th>Independant</th> -->
             </tr>
         </thead>
         <tbody>
-            <tr v-if="features == null">
+            <tr v-if="config.features.value == null">
                 <td colspan="4">Loading...</td>
             </tr>
-            <tr v-else-if="features.length == 0">
+            <tr v-else-if="config.features.value.length == 0">
                 <td colspan="4">No features available in dataset [refetch]...</td>
             </tr>
-            <tr v-else v-for="feature in features" :key="feature">
-                <td>{{ feature.name }}</td>
-            </tr>
+			<template v-else>
+				<tr v-for="feature in config.features.value" :key="feature">
+					<td>{{ feature.name }}</td>
+					<td>
+						<!-- <select>
+							<option v-for="MesK in FeatureMeasurability" :key="MesK" :value="MesK">
+								{{ MesK }}
+							</option>
+						</select> -->
+						<input class="border border-gray-200 px-2 py-1" type="text" v-bind:value="feature.measurability" />
+					</td>
+					<td><input class="w-5 h-5 cursor-pointer" type="checkbox" v-bind:checked="feature.is_dependant" /></td>
+				</tr>
+			</template>
         </tbody>
     </table>
 
@@ -33,7 +44,7 @@
             &#xff1c; 2. Method
         </button>
         <div class="w-0 h-0 invisible"></div>
-        <button @click="$router.push({ name: 'clean' });" :disabled="page_next_disabled" class="router-btn">
+        <button @click="$router.push({ name: 'clean' });" :disabled="false" class="router-btn">
             4. Clean Data &#xff1e;
         </button>
     </div>
@@ -45,7 +56,7 @@
 import { defineComponent } from 'vue';
 import useConfig from '@/composables/useConfig'
 
-import { Feature } from '@/composables/types'
+// import { FeatureMeasurability } from '@/composables/useConfig/features'
 
 export default defineComponent({
 
@@ -53,13 +64,14 @@ export default defineComponent({
 
 		const config = useConfig()
 
-		if (config.features === null)
-		{
-			config.features
-		}
+		// if (config.features !== null)
+		// {
+		// 	config.features
+		// }
 		
 		return {
 			config,
+			// FeatureMeasurability
 		}
 
 	}

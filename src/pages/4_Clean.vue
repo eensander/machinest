@@ -10,20 +10,29 @@
         <thead>
             <tr>
                 <th>Feature</th>
-                <th>DataType</th>
-                <th>Dependant</th>
-                <th>Independant</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            <tr v-if="features == null">
+            <tr v-if="config.features.value == null">
                 <td colspan="4">Loading...</td>
             </tr>
-            <tr v-else-if="features.length == 0">
-                <td colspan="4">No features available in dataset...</td>
+            <tr v-else-if="config.features.value.length == 0">
+                <td colspan="4">No features available in dataset [refetch]...</td>
             </tr>
+			<template v-else>
+				<tr v-for="feature in config.features.value" :key="feature">
+					<td>{{ feature.name }}</td>
+					<td>
+						<button @click="toast('Scanning feature')" class="router-btn">
+							Scan
+						</button>
+					</td>
+				</tr>
+			</template>
         </tbody>
     </table>
+
 
     <div class="flex justify-between mt-8">
         <button @click="$router.push({ name: 'features' });" class="router-btn">
@@ -41,27 +50,18 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import useConfig from '@/composables/useConfig';
-// import Papa from 'papaparse';
-
-type Feature = {
-    name: string,
-    datatype: string,
-    dependant: boolean,
-}
+import { useToast } from "vue-toastification";
 
 export default defineComponent({
 
 	setup() {
 
 		const config = useConfig()
+		const toast = useToast()
 
-		if (config.features === null)
-		{
-			config.features
-		}
-		
 		return {
 			config,
+			toast
 		}
 
 	}

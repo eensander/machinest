@@ -69,13 +69,17 @@ h1 {
     @apply mb-4 font-bold font-serif text-4xl text-gray-800
 }
 
-.router-btn {
+.router-btn, .btn {
 
     @apply font-normal px-4 py-1 border-b-4 ;
     @apply bg-blue-600 border-blue-400 text-white; // default btn style
 
-    &.router-btn-green {
+    &.btn-green {
         @apply bg-green-600 border-green-400 text-white;
+    }
+
+    &.btn-gray {
+        @apply bg-gray-600 border-gray-400 text-white;
     }
 
     &[disabled] {
