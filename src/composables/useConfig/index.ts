@@ -1,6 +1,6 @@
 import { Ref, ref } from "vue";
 
-import { Feature, TrainingMethod, TrainingMethodCategory } from '../types'
+import { TrainingMethod, TrainingMethodCategory } from '../types'
 import { ParseConfig } from 'papaparse'
 
 // import { default as useTrainingMethods } from '../useTrainingMethods'
