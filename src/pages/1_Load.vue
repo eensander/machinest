@@ -2,6 +2,7 @@
   <div>
     <h1>1. Load</h1>
 
+    <p class="mb-4">You can download a test-dataset by clicking <a class="text-blue-800 hover:underline" href="/test-datasets/indian_liver_patient.csv">here.</a></p>
     <p class="text-sm">Please select the dataset which you wish to use for training the model. You can also select a previously trained model. Your options are:</p>
     <ul class="text-sm mt-1 list-disc list-inside leading-6">
         <li>Train new model based on dataset: only requires selecting a <span class="underline">dataset</span>.</li>
