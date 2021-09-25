@@ -9,14 +9,14 @@ const toast = useToast()
 
 export interface FilesConfig {
 	files: {
-		dataset: Ref<File | null>,
-		model: Ref<File | null>,
+		dataset: File | null,
+		model: File | null,
 	}
 }
 
 const files: FilesConfig['files'] = {   
-	dataset: ref(null),
-	model: ref(null),
+	dataset: null,
+	model: null,
 }
 
 export function parseFile(): void {
@@ -29,10 +29,10 @@ export function parseFile(): void {
 	console.log(files)
 	// return
 
-	if (files.dataset.value === null)
+	if (files.dataset === null)
 		return
 
-	Papa.parse(files.dataset.value, {
+	Papa.parse(files.dataset, {
 		error: (err, file) => {
 			// this.file_dataset_status = "error event";
 			console.log("ERROR:", err, file);

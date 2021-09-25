@@ -2,21 +2,25 @@ import { Ref, ref } from "vue"
 // import { Feature } from "../types"
 import { UseConfig } from './index'
 
-export enum FeatureMeasurability {
+// enum using ts union from : https://stackoverflow.com/a/60041791
+export const FeatureMeasurability = {
 	// https://miro.medium.com/max/1400/1*kySPZcf83qLOuaqB1vJxlg.jpeg
 	// https://i.stack.imgur.com/D08t9.jpg
 	// https://cdn.scribbr.com/wp-content/uploads/2020/08/levels-of-measurement-1.png
 
 	// numerical	(qualitative)
 
-	CONTINUOUS = "Continuous",		// infinite options			(some EXACT 'age', 'height', 'blood pressure')
-	DISCRETE = "Discrete",		    // whole numerical value	('no. of children', 'shoe size', 'age' in years)
+	Continuous: "CONTINUOUS",		// infinite options			(some EXACT 'age', 'height', 'blood pressure')
+	Discrete: "DISCRETE",		    // whole numerical value	('no. of children', 'shoe size', 'age' in years)
 
 	// categorical	(quantitative)
 
-	ORDINAL = "Ordinal",		    // ordered/hierarchal data	('pain  severeness', 'mood')
-	NOMINAL = "Nominal",		    // no hierarchy				('eye color', 'dog breed', 'blood type')
-}
+	Ordinal: "ORDINAL",		    // ordered/hierarchal data	('pain  severeness', 'mood')
+	Nominal: "NOMINAL",		    // no hierarchy				('eye color', 'dog breed', 'blood type')
+} as const
+// export FeatureMeasurability
+type FeatureMeasurability = typeof FeatureMeasurability[keyof typeof FeatureMeasurability];
+
 
 export interface Feature {
     name: string,
@@ -25,33 +29,33 @@ export interface Feature {
     is_dependant: boolean,
 }
 
-export type FeaturesConfig = { features: Ref<Feature[] | null> }
+export type FeaturesConfig = { features: Feature[] | null }
 
 // const features = ref(null)
 // demo for : https://www.kaggle.com/uciml/indian-liver-patient-records
-const features: FeaturesConfig["features"] = ref([
+const features: FeaturesConfig["features"] = [
 	{
 		name: "Age",
 		// datatype: "CAte",
 		is_dependant: true,
-		measurability: FeatureMeasurability.DISCRETE
+		measurability: FeatureMeasurability.Discrete
 	},
 	{
 		name: "Gender",
 		is_dependant: false,
-		measurability: FeatureMeasurability.NOMINAL
+		measurability: FeatureMeasurability.Nominal
 	},
 	{
 		name: "Total_Protiens",
 		is_dependant: false,
-		measurability: FeatureMeasurability.CONTINUOUS
+		measurability: FeatureMeasurability.Continuous
 	},
 	{
 		name: "Alkaline_Phosphotase",
 		is_dependant: false,
-		measurability: FeatureMeasurability.CONTINUOUS
+		measurability: FeatureMeasurability.Continuous
 	}
-])
+]
 
 export function refreshFeatures(config: UseConfig): void {
 	

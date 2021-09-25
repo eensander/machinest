@@ -23,7 +23,7 @@
 
 	</div>
 
-    <div class="flex justify-between mt-16 items-start space-x-4">
+    <div class="flex justify-between mt-16 mb-8 items-start space-x-4">
 		<div class="flex-1">
 			<button @click="$router.push({ name: 'clean' });" class="router-btn">
 				&#xff1c; 4. Data Cleaning

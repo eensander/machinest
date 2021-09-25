@@ -17,8 +17,8 @@
             v-for="method_category in training_methods.library"
             :key="method_category"
             class="method-category-block"
-            :class="{'selected': Object.assign({}, config.training_method_category.value).name == method_category.name }"
-            @click="config.training_method_category.value = method_category; config.training_method.value = null;"
+            :class="{'selected': config.training_method_category?.name == method_category.name }"
+            @click="config.training_method_category = method_category; config.training_method = null;"
 		>
             <span class="self-center">{{ method_category.name }}</span>
         </div>
@@ -26,24 +26,24 @@
 
     <hr class="my-4" />
 
-    <div class="grid grid-cols-3 gap-4" v-if="config.training_method_category.value != null ">
+    <div class="grid grid-cols-3 gap-4" v-if="config.training_method_category != null ">
         <div
-            v-for="method in config.training_method_category.value.methods"
+            v-for="method in config.training_method_category.methods"
             :key="method"
             class="method-block"
-            :class="{'selected': Object.assign({}, config.training_method.value).name == method.name }"
-            @click="config.training_method.value = method"
+            :class="{'selected':  config.training_method?.name == method.name }"
+            @click="config.training_method = method"
 		>
             <span class="self-center">{{ method.name }}</span>
         </div>
     </div>
 
-    <div class="flex justify-between mt-8">
+    <div class="flex justify-between my-8">
         <button @click="$router.push({ name: 'load' });" class="router-btn">
             &#xff1c; 1. Load
         </button>
         <div class="w-0 h-0 invisible"></div>
-        <button @click="$router.push({ name: 'features' });" :disabled="config.training_method.value == method" class="router-btn">
+        <button @click="$router.push({ name: 'features' });" :disabled="config.training_method == method" class="router-btn">
             3. Feature Configuration &#xff1e;
         </button>
     </div>
@@ -87,14 +87,14 @@ export default defineComponent({
 
 		const dataset_parse = () => {
 			console.log("")
-			if (config.files.dataset.value == null)
+			if (config.files.dataset == null)
 			{
 				console.log("DATASET IS NULL");
 			}
 			else
 			{	
 				console.log("PARSING...")
-				Papa.parse(config.files.dataset.value, {
+				Papa.parse(config.files.dataset, {
 					error: (err, file) => {
 						// this.file_dataset_status = "error event";
 						console.log("ERROR:", err, file);

@@ -23,7 +23,7 @@
 		</table>
 	</div>
 
-    <div class="flex justify-between mt-8">
+    <div class="flex justify-between my-8">
         <button @click="$router.push({ name: 'method' });" class="router-btn">
             &#xff1c; 2. Method
         </button>

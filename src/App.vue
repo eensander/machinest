@@ -14,6 +14,7 @@
 		</div>
 		-->
 
+		<!--
 		<table class="styled-table hidden">
 			<tbody>
 				<tr>
@@ -26,6 +27,7 @@
 				</tr>
 			</tbody>
 		</table>
+		-->
 
         <router-view></router-view>
     </div>

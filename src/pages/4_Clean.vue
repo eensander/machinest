@@ -14,14 +14,14 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-if="config.features.value == null">
+            <tr v-if="config.features == null">
                 <td colspan="4">Loading...</td>
             </tr>
-            <tr v-else-if="config.features.value.length == 0">
+            <tr v-else-if="config.features.length == 0">
                 <td colspan="4">No features available in dataset [refetch]...</td>
             </tr>
 			<template v-else>
-				<tr v-for="feature in config.features.value" :key="feature">
+				<tr v-for="feature in config.features" :key="feature">
 					<td>{{ feature.name }}</td>
 					<td>
 						<button @click="toast('Scanning feature')" class="router-btn">
@@ -34,7 +34,7 @@
     </table>
 
 
-    <div class="flex justify-between mt-8">
+    <div class="flex justify-between my-8">
         <button @click="$router.push({ name: 'features' });" class="router-btn">
             &#xff1c; 3. Features
         </button>

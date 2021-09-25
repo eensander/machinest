@@ -16,30 +16,30 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-if="config.features.value == null">
+            <tr v-if="config.features == null">
                 <td colspan="4">Loading...</td>
             </tr>
-            <tr v-else-if="config.features.value.length == 0">
+            <tr v-else-if="config.features.length == 0">
                 <td colspan="4">No features available in dataset [refetch]...</td>
             </tr>
 			<template v-else>
-				<tr v-for="feature in config.features.value" :key="feature">
+				<tr v-for="feature in config.features" :key="feature">
 					<td>{{ feature.name }}</td>
 					<td>
-						<!-- <select>
-							<option v-for="MesK in FeatureMeasurability" :key="MesK" :value="MesK">
-								{{ MesK }}
+						<select class="border border-gray-200 px-2 py-1 cursor-pointer" v-model="feature.measurability">
+							<option v-for="(option, option_key) in FeatureMeasurability" :key="option_key" :value="option">
+								{{ option_key }}
 							</option>
-						</select> -->
-						<input class="border border-gray-200 px-2 py-1" type="text" v-bind:value="feature.measurability" />
+						</select>
+						<!-- <input class="border border-gray-200 px-2 py-1" type="text" v-model="feature.measurability"  /> -->
 					</td>
-					<td><input class="w-5 h-5 cursor-pointer" type="checkbox" v-bind:checked="feature.is_dependant" /></td>
+					<td><input class="w-5 h-5 cursor-pointer" type="checkbox" v-model="feature.is_dependant" /></td>
 				</tr>
 			</template>
         </tbody>
     </table>
 
-    <div class="flex justify-between mt-8">
+    <div class="flex justify-between my-8">
         <button @click="$router.push({ name: 'method' });" class="router-btn">
             &#xff1c; 2. Method
         </button>
@@ -53,10 +53,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 import useConfig from '@/composables/useConfig'
 
-// import { FeatureMeasurability } from '@/composables/useConfig/features'
+import { FeatureMeasurability } from '@/composables/useConfig/features'
 
 export default defineComponent({
 
@@ -68,10 +68,12 @@ export default defineComponent({
 		// {
 		// 	config.features
 		// }
-		
+
 		return {
 			config,
-			// FeatureMeasurability
+			FeatureMeasurability,
+
+			console: computed(() => console),
 		}
 
 	}
