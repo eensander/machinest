@@ -18,26 +18,34 @@
         <div class="md:w-1/2 mt-4">
             <h2 class="text-xl mb-1">Dataset</h2>
             <input ref="file_dataset" id="file_dataset" class="hidden" type="file" @change="file_changed_dataset($event)">
-            <div class="bg-gray-50 border border-gray-300 text-center py-6">
+            <div class="bg-gray-50 border border-gray-300 text-center p-6">
                 <label for="file_dataset" class="w-full cursor-pointer">
                     Click <span class="underline">here</span> to select the dataset
                 </label>
-                <div class="w-full" v-if="config.files.dataset?.value != null">
-                    <span class="align-middle text-sm text-blue-700">{{ config.files.dataset.value?.name }}</span>
+				
+				<div v-if="parse_dataset_progress != null" class="my-4 rounded h-3 w-full bg-gray-200 overflow-hidden text-xs text-center text-gray-100">
+					<div :style="`width: ${parse_dataset_progress}%`" class="rounded w-1/3 h-full bg-blue-400 border-blue-500 border-b-2"></div>
+				</div>
+
+                <div v-if="config.files.dataset != null" class="w-full" >
+                    <span class="align-middle text-sm text-blue-700">{{ config.files.dataset.name }}</span>
                     <span class="align-middle ml-2 text-gray-600 cursor-pointer text-xl leading-0" @click="file_clear_dataset()">&times;</span>
                 </div>
                 <!-- <span class="text-sm text-gray-500" >{{ file_dataset_status }}</span> -->
             </div>
+			<label class="mt-6 block cursor-pointer text-gray-900"><input type="checkbox" class="mr-1 cursor-pointer" /> Large dataset</label>
+			<span class="text-sm">Since your dataset is larger than X kB</span>
         </div>
-        <div class="md:w-1/2 mt-4">
+
+        <div class="md:w-1/2 my-4">
             <h2 class="text-xl mb-1">Model</h2>
             <input ref="file_model" id="file_model" class="hidden" type="file" @change="file_changed_model($event)">
             <div class="bg-gray-50 border border-gray-300 text-center py-6">
                 <label for="file_model" class="w-full cursor-pointer">
                     Click <span class="underline">here</span> to select the model
                 </label>
-                <div class="w-full" v-if="config.files.model?.value != null">
-                    <span class="align-middle text-sm text-blue-700">{{ config.files.model.value.name }}</span>
+                <div class="w-full" v-if="config.files.model != null">
+                    <span class="align-middle text-sm text-blue-700">{{ config.files.model.name }}</span>
                     <span class="align-middle ml-2 text-gray-600 cursor-pointer text-xl leading-0" @click="file_clear_model()">&times;</span>
                 </div>
                 <!-- <span class="text-sm text-gray-500" >{{ file_model_status }}</span> -->
@@ -56,22 +64,22 @@
         </button>
         <div class="w-0 h-0 invisible"></div>
 		<div class="flex flex-col space-y-2 md:items-end">
-			<button v-if="config.files.model?.value === null && config.files.dataset?.value === null" disabled="true" class="router-btn">
+			<button v-if="config.files.model === null && config.files.dataset === null" disabled="true" class="router-btn">
 				Load dataset or model
 			</button>
-			<button v-if="config.files.dataset?.value !== null" @click="parse_dataset() && $router.push({ name: 'method' });" class="router-btn">
+			<button v-if="config.files.dataset !== null" @click="parse_dataset() && $router.push({ name: 'method' });" class="router-btn">
 				2. Create new model using <u>dataset</u>
 			</button>
-			<button v-if="config.files.model?.value !== null" @click="parse_model() && $router.push({ name: 'predict' });" class="router-btn">
+			<button v-if="config.files.model !== null" @click="parse_model() && $router.push({ name: 'predict' });" class="router-btn">
 				6. Make predictions on <u>model</u>
 			</button>
 			<button
-				v-if="config.files.model?.value !== null && config.files.dataset?.value !== null" 
+				v-if="config.files.model !== null && config.files.dataset !== null" 
 				@click="parse_dataset() && parse_model() && $router.push({ name: 'clean' });" 
 				class="router-btn"
 			>
 				4. Clean to continue training <u>model</u> using <u>dataset</u>
-			</button>
+			</button> 
 		</div>
     </div>
 
@@ -92,11 +100,6 @@ export default defineComponent({
 
 		const config = useConfig()
 		const toast = useToast()
-		const x = false;
-		if (x)
-		{
-			toast("a")
-		}
 
 		const html_file_dataset = ref(null) as Ref<HTMLInputElement | null>
 		const html_file_model = ref(null) as Ref<HTMLInputElement | null>
@@ -105,14 +108,8 @@ export default defineComponent({
 
 			const target = <HTMLInputElement>e.target
 
-			if (target == null || target.files == null) {
+			if (target == null || target.files == null || target.files.length !== 1) { // last condition limits 1 upload per
 				return null;
-			}
-
-			if (target.files.length !== 1)
-			{
-				alert('now null?')
-				return null; // invalid amount of files (or input removed?)
 			}
 
 			const file = target.files[0];
@@ -121,42 +118,46 @@ export default defineComponent({
 		}
 
 		const file_changed_dataset = (e: Event) => {
-			config.files.dataset.value = get_file_from_event(e);
+			config.files.dataset = get_file_from_event(e);
 		}
         const file_changed_model = (e: Event) => {
-            config.files.model.value = get_file_from_event(e);
+            config.files.model = get_file_from_event(e);
         }
 
 		const file_clear_dataset = () => {
 			if(html_file_dataset.value != null)
 				html_file_dataset.value.value = "";
-			config.files.dataset.value = null;
+			config.files.dataset = null;
 		}
 		const file_clear_model = () => {
 			if(html_file_model.value != null)
 				html_file_model.value.value = "";
-			config.files.model.value = null;
+			config.files.model = null;
 		}
 
 		const parse_dataset_progress = ref(null) as Ref<number | null>
-		const parse_dataset = async () => {
-			parse_dataset_progress.value = 0;
-			if (config.files.dataset.value !== null)
+		const parse_dataset = () => {
+			if (config.files.dataset !== null)
 			{
-				await Papa.parse(config.files.dataset.value, {
+				parse_dataset_progress.value = 0;
+				let dataset_file_size = config.files.dataset.size;
+				Papa.parse(config.files.dataset, {
+					step: function(results, parser) {
+						// console.log(results, parser)
+						parse_dataset_progress.value = (results.meta.cursor / dataset_file_size) * 100
+						console.log(`Progress: ${parse_dataset_progress.value}%`)
+					},
 					error: (err, file) => {
-						// this.file_dataset_status = "error event";
-						console.log("ERROR:", err, file);
+						// console.log("ERROR:", err, file);
+						parse_dataset_progress.value = null
+						toast("Failed parasing input dataset")
 					},
 					complete: (results) => {
-						// this.file_dataset_status = "complete event";
-						console.log("PARSED.", results);
-						console.log(results.data[0]);
+						// console.log("PARSED.", results);
 						parse_dataset_progress.value = 100
 					}
 				});
 			}
-			return false;
 		}
 		const parse_model_progress = ref(null) as Ref<number | null>
 		const parse_model = () => {
