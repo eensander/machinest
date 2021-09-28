@@ -7,7 +7,8 @@ import { ParseConfig } from 'papaparse'
 
 
 import { default as features, FeaturesConfig } from './features'
-import { default as files, FilesConfig } from './files'
+import { default as dataset, DatasetConfig } from './dataset'
+import { default as model, ModelConfig } from './model'
 
 const dataset_config = {}
 
@@ -16,7 +17,11 @@ const training_method = null
 
 const test = null
 
-export interface UseConfig extends FeaturesConfig, FilesConfig {
+export interface UseConfig {
+
+	features: FeaturesConfig,
+	dataset: DatasetConfig,
+	model: ModelConfig,
 
 	dataset_config: ParseConfig
 
@@ -27,8 +32,22 @@ export interface UseConfig extends FeaturesConfig, FilesConfig {
 	
 }
 
+// interface tmp { 
+
+// 	dataset_config: ParseConfig
+
+// 	training_method_category: TrainingMethodCategory | null,
+// 	training_method: TrainingMethod | null,
+
+// 	test: string | null,
+	
+// }
+// type UseConfig = FeaturesConfig & DatasetConfig & ModelConfig & tmp;
+
 const config: UseConfig = reactive({
-	files,
+	
+	dataset,
+	model,
 
 	dataset_config,
 

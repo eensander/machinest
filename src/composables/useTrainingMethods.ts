@@ -34,9 +34,9 @@ const state = reactive({
 
 import training_methods from "@/training_methods";
 
-export default function useTrainingMethods(): UseTrainingMethods {
-	// return toRefs(state)
-	return {
-		library: training_methods
-	}	
-}
+// export default function useTrainingMethods(): UseTrainingMethods {
+// 	// return toRefs(state)
+// 	return {
+// 		library: training_methods
+// 	}	
+// }

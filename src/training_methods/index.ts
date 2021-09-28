@@ -15,7 +15,7 @@ export default [
 		]
 	},
 	{
-		name: "deep learning",
+		name: "reinforcement",
 		methods: [
 			// require('../learning_methods/supervised/linear_regression')
 		]

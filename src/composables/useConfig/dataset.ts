@@ -7,32 +7,42 @@ import { useToast } from "vue-toastification";
 
 const toast = useToast()
 
-export interface FilesConfig {
-	files: {
-		dataset: File | null,
-		model: File | null,
-	}
+export interface DatasetConfig {
+	file: File | null,
+
+	read_as_stream: boolean, // when true, file will be read as stream using Papaparse
+
+	data: string[][]
+
+	// parse_progress: , // ?
+	// parsed: ,          // ?
+
+
+
+	// parsed: 
 }
 
-const files: FilesConfig['files'] = {   
-	dataset: null,
-	model: null,
+const dataset: DatasetConfig = {
+	file: null,
+	read_as_stream: false,
+	data: []
+
 }
 
-export function parseFile(): void {
+export function parse_dataset(): void {
 	
 	// 1. a papa la parse from files.ts (-> create api)? 
 	// 2. push returning features onto config
 	// 3. profit?
 
 	// config.features
-	console.log(files)
+	console.log(dataset.file)
 	// return
 
-	if (files.dataset === null)
+	if (dataset.file === null)
 		return
 
-	Papa.parse(files.dataset, {
+	Papa.parse(dataset.file, {
 		error: (err, file) => {
 			// this.file_dataset_status = "error event";
 			console.log("ERROR:", err, file);
@@ -45,9 +55,8 @@ export function parseFile(): void {
 		}
 	});
 	
-
 	toast("Failed parsing dataset")
 
 }
 
-export default files
+export default dataset

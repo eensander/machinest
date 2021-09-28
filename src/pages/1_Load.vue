@@ -23,18 +23,20 @@
                     Click <span class="underline">here</span> to select the dataset
                 </label>
 				
-				<div v-if="parse_dataset_progress != null" class="my-4 rounded h-3 w-full bg-gray-200 overflow-hidden text-xs text-center text-gray-100">
-					<div :style="`width: ${parse_dataset_progress}%`" class="rounded w-1/3 h-full bg-blue-400 border-blue-500 border-b-2"></div>
+				<div v-if="parse_dataset_progress != null" class="my-3 rounded h-3 w-4/5 mx-auto bg-gray-200 overflow-hidden text-xs text-center text-gray-100">
+					<div :style="`width: ${parse_dataset_progress}%`" class="rounded h-full bg-blue-400 border-blue-500 border-b-2"></div>
 				</div>
 
-                <div v-if="config.files.dataset != null" class="w-full" >
-                    <span class="align-middle text-sm text-blue-700">{{ config.files.dataset.name }}</span>
+                <div v-if="config.dataset.file != null" class="w-full" >
+                    <span class="align-middle text-sm text-blue-700">{{ config.dataset.file.name }}</span>
                     <span class="align-middle ml-2 text-gray-600 cursor-pointer text-xl leading-0" @click="file_clear_dataset()">&times;</span>
                 </div>
                 <!-- <span class="text-sm text-gray-500" >{{ file_dataset_status }}</span> -->
             </div>
-			<label class="mt-6 block cursor-pointer text-gray-900"><input type="checkbox" class="mr-1 cursor-pointer" /> Large dataset</label>
-			<span class="text-sm">Since your dataset is larger than X kB</span>
+			<label class="mt-6 block cursor-pointer text-gray-900"><input type="checkbox" v-model="config.dataset.read_as_stream" class="mr-1 cursor-pointer" /> Large dataset (read file in stream)</label>
+			<span v-if="config.dataset.file != null && config.dataset.file.size > dataset_stream_recommendation_bytes" class="mt-1 text-sm text-red-800 opacity-80">
+				Since this dataset is larger than {{dataset_stream_recommendation_bytes/(1000*1000)}} MB (dataset: {{ config.dataset.file?.size/(1000*1000) }} MB), we recommend reading the file as a stream by checking this checkbox.
+			</span>
         </div>
 
         <div class="md:w-1/2 my-4">
@@ -44,8 +46,8 @@
                 <label for="file_model" class="w-full cursor-pointer">
                     Click <span class="underline">here</span> to select the model
                 </label>
-                <div class="w-full" v-if="config.files.model != null">
-                    <span class="align-middle text-sm text-blue-700">{{ config.files.model.name }}</span>
+                <div class="w-full" v-if="config.model.file != null">
+                    <span class="align-middle text-sm text-blue-700">{{ config.model.file.name }}</span>
                     <span class="align-middle ml-2 text-gray-600 cursor-pointer text-xl leading-0" @click="file_clear_model()">&times;</span>
                 </div>
                 <!-- <span class="text-sm text-gray-500" >{{ file_model_status }}</span> -->
@@ -54,7 +56,7 @@
     </div>
 
 <!-- 
-	<button @click="dologthings(config.files.dataset)" :disabled="page_next_disabled" class="router-btn mt-2">
+	<button @click="dologthings(config.dataset.file)" :disabled="page_next_disabled" class="router-btn mt-2">
             Do something
     </button> -->
 
@@ -64,17 +66,17 @@
         </button>
         <div class="w-0 h-0 invisible"></div>
 		<div class="flex flex-col space-y-2 md:items-end">
-			<button v-if="config.files.model === null && config.files.dataset === null" disabled="true" class="router-btn">
+			<button v-if="config.model.file === null && config.dataset.file === null" disabled="true" class="router-btn">
 				Load dataset or model
 			</button>
-			<button v-if="config.files.dataset !== null" @click="parse_dataset() && $router.push({ name: 'method' });" class="router-btn">
+			<button v-if="config.dataset.file !== null" @click="parse_dataset(() => $router.push({ name: 'method' }));" class="router-btn">
 				2. Create new model using <u>dataset</u>
 			</button>
-			<button v-if="config.files.model !== null" @click="parse_model() && $router.push({ name: 'predict' });" class="router-btn">
+			<button v-if="config.model.file !== null" @click="parse_model() && $router.push({ name: 'predict' });" class="router-btn">
 				6. Make predictions on <u>model</u>
 			</button>
 			<button
-				v-if="config.files.model !== null && config.files.dataset !== null" 
+				v-if="config.model.file !== null && config.dataset.file !== null" 
 				@click="parse_dataset() && parse_model() && $router.push({ name: 'clean' });" 
 				class="router-btn"
 			>
@@ -91,6 +93,7 @@ import { defineComponent, ref, Ref, computed } from 'vue';
 
 import { useToast } from "vue-toastification";
 import useConfig from '@/composables/useConfig';
+// import { parse_dataset } from '@/composables/useConfig/dataset'
 
 import Papa from 'papaparse';
 
@@ -118,54 +121,96 @@ export default defineComponent({
 		}
 
 		const file_changed_dataset = (e: Event) => {
-			config.files.dataset = get_file_from_event(e);
+			config.dataset.file = get_file_from_event(e);
 		}
         const file_changed_model = (e: Event) => {
-            config.files.model = get_file_from_event(e);
+            config.model.file = get_file_from_event(e);
         }
 
 		const file_clear_dataset = () => {
 			if(html_file_dataset.value != null)
 				html_file_dataset.value.value = "";
-			config.files.dataset = null;
+			config.dataset.file = null;
+			parse_dataset_progress.value = null
 		}
 		const file_clear_model = () => {
 			if(html_file_model.value != null)
 				html_file_model.value.value = "";
-			config.files.model = null;
+			config.model.file = null;
+			parse_model_progress.value = null
 		}
 
 		const parse_dataset_progress = ref(null) as Ref<number | null>
-		const parse_dataset = () => {
-			if (config.files.dataset !== null)
+		const parse_dataset = (then: () => void) => {
+			if (config.dataset.file !== null)
 			{
+				if (parse_dataset_progress.value == 100)
+				{
+					then()
+					return
+				}
+				
 				parse_dataset_progress.value = 0;
-				let dataset_file_size = config.files.dataset.size;
-				Papa.parse(config.files.dataset, {
-					step: function(results, parser) {
-						// console.log(results, parser)
+
+				let dataset_file_size = config.dataset.file.size;
+				let all_data: string[][] = [];
+				let first_rows: string[][] = [];
+
+				Papa.parse(config.dataset.file, {
+					step: function(results) {
 						parse_dataset_progress.value = (results.meta.cursor / dataset_file_size) * 100
-						console.log(`Progress: ${parse_dataset_progress.value}%`)
+						
+						if (results.meta.cursor < 3)
+							first_rows.push(results.data as string[])
+
+						if (!config.dataset.read_as_stream)
+							all_data.push(results.data as string[]) 
+						// console.log(`Progress: ${parse_dataset_progress.value}%`)
 					},
 					error: (err, file) => {
 						// console.log("ERROR:", err, file);
-						parse_dataset_progress.value = null
-						toast("Failed parasing input dataset")
+						// parse_dataset_progress.value;
+						toast(`Failed parasing input dataset ${file?.name}`)
+						toast(`Error: ${err.message}`)
+						return;
 					},
 					complete: (results) => {
-						// console.log("PARSED.", results);
+						console.log(results)
+						// if (!config.dataset.read_as_stream && results.data.length > 0)
+						// 	config.dataset.data = results.data;
+						
 						parse_dataset_progress.value = 100
+						if (results.errors.length > 0)
+							toast(`Dataset parsed with errors`)
+						else
+							toast.success(`Dataset parsed succesfully`)
+
+						if (!config.dataset.read_as_stream)
+						{
+							config.dataset.data = all_data
+						}
+
+						console.log(config.dataset.data)
+
+						then()
+						return;
 					}
 				});
+
+
 			}
 		}
+		
 		const parse_model_progress = ref(null) as Ref<number | null>
 		const parse_model = () => {
 			return false;
 		}
 
 		const page_next_disabled = computed( () => false )
-	
+
+		const dataset_stream_recommendation_bytes = 20 * 1000; // *1000^1 = kB, *1000^2 = MB, etc...
+		
+
 		return {
 
 			config,
@@ -182,6 +227,8 @@ export default defineComponent({
 			parse_model,
 
 			page_next_disabled,
+
+			dataset_stream_recommendation_bytes,
 			
 		}
 	
