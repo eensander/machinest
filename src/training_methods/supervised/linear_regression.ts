@@ -1,9 +1,9 @@
-import { Row, TrainingMethod } from '@/composables/types'
+import { Data, TrainingMethod } from '@/composables/types'
 import { FeatureMeasurability } from '@/composables/useConfig/features'
 
-import regression from 'regression';
+import regression, { DataPoint } from 'regression';
 
-export default class extends TrainingMethod {
+export default class extends TrainingMethod<number, number> {
 
 	name = "(Multiple) Linear Regression"
 	enabled = true
@@ -11,31 +11,39 @@ export default class extends TrainingMethod {
 	conditions = {
 		streamable: false,
 		features: {
-			independant: {
-				// min: 1,
-				// max: 1,
-				type: [FeatureMeasurability.Ordinal, FeatureMeasurability.Nominal]
-			},
+			// x
 			dependant: {
-				min: 1,
-				max: Infinity,
-				type: [FeatureMeasurability.Discrete, FeatureMeasurability.Continuous]
+				amount: Infinity,
+				measure: [FeatureMeasurability.Discrete, FeatureMeasurability.Continuous]
+			},
+			// y
+			independant: {
+				amount: 1,
+				measure: [FeatureMeasurability.Ordinal, FeatureMeasurability.Nominal]
 			}
 		}
 	}
 
 	model: any = null;
 
-	fit(data: Row[]) {
-		const data_ = [[].concat(...data.x), [].concat(...data.y)];
-		this.model = regression.polynomial(data_)
+	fit(data: Data) {
+		// data.x;
+		// const data_ = [[].concat(...data.x), [].concat(...data.y)];
+		const x: number[] = [].concat(...data.x as []);
+
+		// if (data.x == null || data.x.length == 0 || data.x[0].length == 0)
+		// 	return;
+
+		const data_f: [number[], number[]] = [[].concat(...data.x as []), [].concat(...data.y as [])];
+
+		// this.model = regression.polynomial(data_f as DataPoint[])
 	}
 
 	// train: () => {
 	// 	console.log("simulating training row", row);
 	// },
 
-	predict(data: Row[]) {
+	predict(data: Data) {
 		// return row_y;
 	}
 
