@@ -1,4 +1,7 @@
 import * as VueRouter from 'vue-router'
+import useConfig from './composables/useConfig';
+
+const config = useConfig();
 
 // https://next.router.vuejs.org/guide/#javascript
 
@@ -25,6 +28,16 @@ const router = VueRouter.createRouter({
 	// 4. Provide the history implementation to use. We are using the hash history for simplicity here.
 	history: VueRouter.createWebHashHistory(),
 	routes,
+})
+
+router.beforeEach((To, From, Next) => {
+	if (To.name == 'features'){
+		if (config.dataset.file == null){
+			console.log("file is null jajaja")
+		}
+		console.log(config.dataset.file)
+	}
+	Next();
 })
 
 export default router

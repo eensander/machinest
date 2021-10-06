@@ -28,7 +28,7 @@ export default class extends TrainingMethod<number, number> {
 
 	fit(data: Data) {
 
-		console.log("LINRG: Fit called")
+		console.log("LINRG: Fit called", data)
 
 		return;
 
