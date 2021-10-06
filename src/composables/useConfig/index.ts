@@ -1,7 +1,7 @@
 import { reactive, Ref, ref } from "vue";
 
 import { TrainingMethod, TrainingMethodCategory } from '../types'
-import { ParseConfig } from 'papaparse'
+// import { ParseConfig } from 'papaparse'
 
 // import { default as useTrainingMethods } from '../useTrainingMethods'
 
@@ -23,7 +23,7 @@ export interface UseConfig {
 	dataset: DatasetConfig,
 	model: ModelConfig,
 
-	dataset_config: ParseConfig
+	// dataset_config: ParseConfig
 
 	training_method_category: TrainingMethodCategory | null,
 	training_method: TrainingMethod | null,
@@ -49,7 +49,7 @@ const config: UseConfig = reactive({
 	dataset,
 	model,
 
-	dataset_config,
+	// dataset_config,
 
 	training_method_category,
 	training_method,

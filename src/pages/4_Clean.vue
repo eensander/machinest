@@ -24,9 +24,7 @@
 				<tr v-for="feature in config.features" :key="feature">
 					<td>{{ feature.name }}</td>
 					<td>
-						<button @click="toast('Scanning feature')" class="router-btn">
-							Scan
-						</button>
+						<button @click="toast('Scanning feature (hypothetically)')" class="router-btn">Scan</button>
 					</td>
 				</tr>
 			</template>

@@ -33,10 +33,14 @@
                 </div>
                 <!-- <span class="text-sm text-gray-500" >{{ file_dataset_status }}</span> -->
             </div>
-			<label class="mt-6 block cursor-pointer text-gray-900"><input type="checkbox" v-model="config.dataset.read_as_stream" class="mr-1 cursor-pointer" /> Large dataset (read file in stream)</label>
-			<span v-if="config.dataset.file != null && config.dataset.file.size > dataset_stream_recommendation_bytes" class="mt-1 text-sm text-red-800 opacity-80">
-				Since this dataset is larger than {{dataset_stream_recommendation_bytes/(1000*1000)}} MB (dataset: {{ config.dataset.file?.size/(1000*1000) }} MB), we recommend reading the file as a stream by checking this checkbox.
-			</span>
+			<div>
+				<label class="mt-6 block cursor-pointer text-gray-900"><input type="checkbox" v-model="config.dataset.read_as_stream" class="mr-1 cursor-pointer" /> Large dataset (read file in stream)</label>
+				<span v-if="config.dataset.file != null && config.dataset.file.size > dataset_stream_recommendation_bytes" class="mt-1 text-sm text-red-800 opacity-80">
+					Since this dataset is larger than {{dataset_stream_recommendation_bytes/(1000*1000)}} MB (dataset: {{ config.dataset.file?.size/(1000*1000) }} MB), we recommend reading the file as a stream by checking this checkbox.
+				</span>
+				
+				<label class="mt-3 block cursor-pointer text-gray-900"><input type="checkbox" v-model="config.dataset.context.first_row_is_header" class="mr-1 cursor-pointer" /> First row is header</label>
+			</div>
         </div>
 
         <div class="md:w-1/2 my-4">
@@ -69,7 +73,7 @@
 			<button v-if="config.model.file === null && config.dataset.file === null" disabled="true" class="router-btn">
 				Load dataset or model
 			</button>
-			<button v-if="config.dataset.file !== null" @click="parse_dataset(() => $router.push({ name: 'method' }));" class="router-btn">
+			<button v-if="config.dataset.file !== null" @click="parse_dataset(() => $router.push({ name: 'features' }));" class="router-btn">
 				2. Create new model using <u>dataset</u>
 			</button>
 			<button v-if="config.model.file !== null" @click="parse_model() && $router.push({ name: 'predict' });" class="router-btn">
@@ -93,6 +97,7 @@ import { defineComponent, ref, Ref, computed } from 'vue';
 
 import { useToast } from "vue-toastification";
 import useConfig from '@/composables/useConfig';
+import { default as dataset_default } from '@/composables/useConfig/dataset'
 // import { parse_dataset } from '@/composables/useConfig/dataset'
 
 import Papa from 'papaparse';
@@ -131,6 +136,7 @@ export default defineComponent({
 			if(html_file_dataset.value != null)
 				html_file_dataset.value.value = "";
 			config.dataset.file = null;
+			config.dataset = dataset_default;
 			parse_dataset_progress.value = null
 		}
 		const file_clear_model = () => {
@@ -153,15 +159,26 @@ export default defineComponent({
 				parse_dataset_progress.value = 0;
 
 				let dataset_file_size = config.dataset.file.size;
+				let all_errors: Papa.ParseError[][] = [];
 				let all_data: string[][] = [];
-				let first_rows: string[][] = [];
+				// let first_rows: string[][] = [];
 
 				Papa.parse(config.dataset.file, {
 					step: function(results) {
 						parse_dataset_progress.value = (results.meta.cursor / dataset_file_size) * 100
 						
-						if (results.meta.cursor < 3)
-							first_rows.push(results.data as string[])
+						config.dataset.amount_rows += 1;
+
+						if (results.errors.length > 0)
+						{
+							all_errors.push(results.errors)
+						}
+
+						if (config.dataset.amount_rows < 4)
+						{
+							config.dataset.data_first_rows.push(results.data as string[])
+							// console.log("steprow", results.data as string[])
+						}
 
 						if (!config.dataset.read_as_stream)
 							all_data.push(results.data as string[]) 
@@ -172,28 +189,46 @@ export default defineComponent({
 						// parse_dataset_progress.value;
 						toast(`Failed parasing input dataset ${file?.name}`)
 						toast(`Error: ${err.message}`)
+						parse_dataset_progress.value = null
 						return;
 					},
 					complete: (results) => {
-						console.log(results)
+						// console.log(results)
 						// if (!config.dataset.read_as_stream && results.data.length > 0)
 						// 	config.dataset.data = results.data;
 						
 						parse_dataset_progress.value = 100
 						if (results.errors.length > 0)
+						{
 							toast(`Dataset parsed with errors`)
+							parse_dataset_progress.value = null
+						}
+						if (all_errors.length > 0)
+						{
+							toast(`Dataset parsed, but some rows (${all_errors.length}) contain errors`)
+							console.log(all_errors);
+							parse_dataset_progress.value = null
+						}
+						else if (config.dataset.amount_rows < 2)
+						{
+							toast('Dataset need to have atleast 2 rows.')
+							parse_dataset_progress.value = null
+						}
 						else
+						{
 							toast.success(`Dataset parsed succesfully`)
 
-						if (!config.dataset.read_as_stream)
-						{
-							config.dataset.data = all_data
+							if (!config.dataset.read_as_stream)
+							{
+								config.dataset.data_parsed_raw = all_data
+								// console.log(config.dataset.data_parsed_raw)
+							}
+
+							console.log("COMPLETED: ", config.dataset)
+
+							then()
 						}
 
-						console.log(config.dataset.data)
-
-						then()
-						return;
 					}
 				});
 

@@ -32,8 +32,9 @@ export interface Feature {
 
 export type FeaturesConfig = Feature[] | null
 
-// const features = ref(null)
+// const features = ref([])
 // demo for : https://www.kaggle.com/uciml/indian-liver-patient-records
+/*
 const features: FeaturesConfig = [
 	{
 		name: "Age",
@@ -61,6 +62,8 @@ const features: FeaturesConfig = [
 		measurability: FeatureMeasurability.Continuous
 	}
 ]
+*/
+const features: FeaturesConfig = null;
 
 export function initFeatures(features: string[]): void {
 	

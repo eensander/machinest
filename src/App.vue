@@ -1,36 +1,25 @@
 <template>
-    <div id="main" class="">
-        <div class="self-center mt-8 mb-10 border-b-4 border-gray-300 pb-2">
-            <!-- <img class="" alt="Vue logo" src="./assets/logo.png"> -->
-            <span class="text-5xl uppercase font-bold text-blue-800">Machinest</span>
-        </div>
-		
-		<!-- 
-		<div>
-			<ul id="breadcrumb">
-				<li><a href="#">Test</a></li>
-				<li><a href="#">Test</a></li>
-			</ul>
+	<div class="">
+<!--
+		<div class="sidebar">
+			<span class="sidebar-item">Home</span>
+			<span class="sidebar-item">Load</span>
+			<span class="sidebar-item active">Features</span>
+			<span class="sidebar-item">Method</span>
+			<span class="sidebar-item">Clean</span>
+			<span class="sidebar-item">Train</span>
 		</div>
-		-->
+-->
+		<div id="main" class="">
+			<div class="self-center mt-8 mb-10 border-b-4 border-gray-300 pb-2">
+				<!-- <img class="" alt="Vue logo" src="./assets/logo.png"> -->
+				<span class="text-5xl uppercase font-bold text-blue-800">Machinest</span>
+			</div>
+			
+			<router-view></router-view>
+		</div>
 
-		<!--
-		<table class="styled-table hidden">
-			<tbody>
-				<tr>
-					<th>Test:</th>
-					<td>{{ config.test.value }}</td>
-				</tr>
-				<tr>
-					<th>Training Method:</th>
-					<td>{{ config.training_method.value }}</td>
-				</tr>
-			</tbody>
-		</table>
-		-->
-
-        <router-view></router-view>
-    </div>
+	</div>
 </template>
 
 <script lang="ts">
@@ -57,6 +46,24 @@ export default defineComponent({
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*
+.sidebar {
+	@apply w-72 border-r border-gray-300 bg-gray-100 p-4 pt-32;
+	.sidebar-item {
+		@apply block w-full px-6 py-2 rounded-md text-sm text-gray-900 select-none my-1;
+
+		&.active {
+			@apply relative z-10;
+			background-color: #e0e0ee
+		}
+
+		&:not(.active):hover {
+			@apply bg-gray-50;
+		}
+	}
+}
+*/
 
 html {
 }
@@ -120,7 +127,7 @@ table.styled-table {
             }
             td {
                 @apply border-dashed border-t border-gray-200 ;
-                @apply px-6 py-2 ;
+                @apply pl-6 py-2 ;
 
                 /*
                 a:not(.btn) {

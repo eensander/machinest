@@ -14,8 +14,19 @@ export type Data = { x: DataType[][] | DataType[], y: DataType[][] | DataType[] 
 }*/
 
 // https://stackoverflow.com/a/59488269
+// export interface TrainingMethodConstructor {
+// 	new(): any;
+// }
 export interface TrainingMethod<Tx extends DataType = number, Ty extends DataType = number> {
-	name: string,
+
+	new(): any;
+
+	testing: string;
+
+	data: Data,
+	features: Feature[];
+
+	// abstract title: string,
 	conditions: {
 		streamable: boolean | null,
 		features: {
@@ -24,7 +35,7 @@ export interface TrainingMethod<Tx extends DataType = number, Ty extends DataTyp
 		}
 	}
 
-	score?(predicted: Data, real: Data): void
+	score?(predicted_y: Data, real_y: Data): void
 	test?(data:  Data): void
 	plot?(): void
 
@@ -36,6 +47,8 @@ export interface TrainingMethod<Tx extends DataType = number, Ty extends DataTyp
 
 export abstract class TrainingMethod {
 
+	static title: string;
+	
     conditions: TrainingMethod["conditions"] = {
 		streamable: null,
 		features: {
@@ -53,17 +66,26 @@ export abstract class TrainingMethod {
 	 * @param data 
 	 */
 	correct_data(data: Data): Data {
-		// TODO: https://stackoverflow.com/a/52400286
-		if (this.conditions.features.dependant.amount > 1 && data.x )
+		// TODO: https://stackoverflow.com/a/52400286 || https://www.typescriptlang.org/docs/handbook/advanced-types.html
+		if (this.conditions.features.dependant.amount > 1 && this.datatype_is_2d(data.x) )
+			data.x = [].concat(...data.x as []); 
+		if (this.conditions.features.dependant.amount > 1 && this.datatype_is_2d(data.x) )
 			data.x = [].concat(...data.x as []); // I guess?
-
+		
+		return {x: data.x, y: data.y}
 	}
 	
-	base_fit(data: Data): void {
+	datatype_is_2d(datatype: DataType[] | DataType[][]): datatype is DataType[]  {
+		// return true
+		return typeof (datatype as DataType[]) === "object"
+	}
+	
+	base_load(): void {
 
+		// this.data = this.correct_data(data)
+		// this.data = data
 
-
-		this.fit(data)
+		this.fit(this.data)
 	}
 
 	base_predict(data: Data): void {

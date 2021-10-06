@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col">
-    <h1>2. Training Method</h1>
+    <h1>3. Training Method</h1>
 
     <p class="text-sm">Please select the which you would like to use.</p>
 	
@@ -15,7 +15,7 @@
 	<span class="text-xl mb-3 font-light text-gray-600 text-left">Training Categories</span>
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
         <div
-            v-for="method_category in training_methods.library"
+            v-for="method_category in training_methods"
             :key="method_category"
             class="method-category-block"
             :class="{'selected': config.training_method_category?.name == method_category.name }"
@@ -36,20 +36,20 @@
 			v-for="method in config.training_method_category.methods"
 			:key="method"
 			class="method-block"
-			:class="{'selected':  config.training_method?.name == method.name }"
+			:class="{'selected':  config.training_method?.title == method.title }"
 			@click="config.training_method = method"
 		>
-			<span class="self-center">{{ method.name }}</span>
+			<span class="self-center">{{ method.title }}</span>
 		</div>
     </div>
 
     <div class="flex justify-between my-8">
         <button @click="$router.push({ name: 'load' });" class="router-btn">
-            &#xff1c; 1. Load
+            &#xff1c; 2. Feature Configuration
         </button>
         <div class="w-0 h-0 invisible"></div>
-        <button @click="$router.push({ name: 'features' });" :disabled="config.training_method == null" class="router-btn">
-            3. Feature Configuration &#xff1e;
+        <button @click="$router.push({ name: 'clean' });" :disabled="config.training_method == null" class="router-btn">
+            4. Clean Data &#xff1e;
         </button>
     </div>
 

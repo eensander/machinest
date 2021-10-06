@@ -5,10 +5,10 @@ import regression, { DataPoint } from 'regression';
 
 export default class extends TrainingMethod<number, number> {
 
-	name = "(Multiple) Linear Regression"
-	enabled = true
+	static title = "(Multiple) Linear Regression"
+	static enabled = true
 
-	conditions = {
+	static conditions = {
 		streamable: false,
 		features: {
 			// x
@@ -27,6 +27,11 @@ export default class extends TrainingMethod<number, number> {
 	model: any = null;
 
 	fit(data: Data) {
+
+		console.log("LINRG: Fit called")
+
+		return;
+
 		// data.x;
 		// const data_ = [[].concat(...data.x), [].concat(...data.y)];
 		const x: number[] = [].concat(...data.x as []);

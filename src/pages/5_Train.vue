@@ -21,6 +21,8 @@
 			<div :style="`width: ${30}%`" class="rounded w-1/3 h-full bg-blue-400 border-blue-500 border-b-2"></div>
 		</div>
 
+		<span class="my-4 block text-gray-700 text-sm">Status: {{ trainer.status.action }}</span>
+
 	</div>
 
     <div class="flex justify-between mt-16 mb-8 items-start space-x-4">
@@ -30,6 +32,9 @@
 			</button>
 		</div>
 		<div class="flex-1 flex flex-col flex-grow-0">
+			<button class="btn btn-gray mb-2" @click="trainer.start()">
+				Start
+			</button>
 			<button class="btn btn-gray mb-2">
 				Pause
 			</button>
@@ -47,19 +52,19 @@
 import { defineComponent } from 'vue';
 import useConfig from '@/composables/useConfig';
 
+// import useTrainer from '@/composables/useTrainer';
+import {Trainer} from '@/composables/useTrainer';
+
 export default defineComponent({
 
 	setup() {
 
 		const config = useConfig()
-
-		if (config.features === null)
-		{
-			config.features
-		}
+		const trainer = new Trainer(config)
 		
 		return {
 			config,
+			trainer
 		}
 
 	}

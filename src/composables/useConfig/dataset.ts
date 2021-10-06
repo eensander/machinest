@@ -12,7 +12,17 @@ export interface DatasetConfig {
 
 	read_as_stream: boolean, // when true, file will be read as stream using Papaparse
 
-	data: string[][]
+	data_parsed_raw: string[][],
+	amount_rows: number,
+	data_first_rows: string[][], // first few rows for identification purposes. needed when read_as_stream is false and thus data_parsed_raw is empty.
+	
+	context: {
+		first_row_is_header: boolean,
+		// delimiter: string
+	}
+
+	train_split_size: number,
+
 
 	// parse_progress: , // ?
 	// parsed: ,          // ?
@@ -25,7 +35,17 @@ export interface DatasetConfig {
 const dataset: DatasetConfig = {
 	file: null,
 	read_as_stream: false,
-	data: []
+
+	amount_rows: 0,
+	data_parsed_raw: [],
+	data_first_rows: [],
+	
+	context: {
+		first_row_is_header: true,
+		// delimiter: ','
+	},
+
+	train_split_size: 0,
 
 }
 
@@ -36,7 +56,7 @@ export function parse_dataset(): void {
 	// 3. profit?
 
 	// config.features
-	console.log(dataset.file)
+	// console.log(dataset.file)
 	// return
 
 	if (dataset.file === null)
