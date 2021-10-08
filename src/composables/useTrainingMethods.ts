@@ -1,9 +1,23 @@
 // import { reactive, ref, Ref, toRefs } from "vue"
 
-import { TrainingMethodCategory } from './types'
+import { TrainingMethod, TrainingMethodCategory } from './types'
 
 interface UseTrainingMethods {
 	library: TrainingMethodCategory[],
+}
+
+// WIP:
+type labels = { name: string, bgcolor: string }[]
+
+export const getMethodLabels = (method: TrainingMethod) => {
+	let labels: labels = [];
+
+	if (method.conditions.streamable) {
+		labels.push({
+			name: 'Streamable',
+			bgcolor: 'grey'
+		})
+	}
 }
 
 /*)

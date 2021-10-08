@@ -6,12 +6,6 @@
 	
     <hr class="my-4" />
 
-<!-- 
-	<button @click="dataset_parse">Parse!</button>
-	<textarea :value="parsed_status"></textarea>
-
-	<hr class="my-4"> -->
-
 	<span class="text-xl mb-3 font-light text-gray-600 text-left">Training Categories</span>
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
         <div
@@ -36,7 +30,7 @@
 			v-for="method in config.training_method_category.methods"
 			:key="method"
 			class="method-block"
-			:class="{'selected':  config.training_method?.title == method.title }"
+			:class="{'selected': config.training_method?.title == method.title }"
 			@click="config.training_method = method"
 		>
 			<span class="self-center">{{ method.title }}</span>
@@ -44,7 +38,7 @@
     </div>
 
     <div class="flex justify-between my-8">
-        <button @click="$router.push({ name: 'load' });" class="router-btn">
+        <button @click="$router.push({ name: 'features' });" class="router-btn">
             &#xff1c; 2. Feature Configuration
         </button>
         <div class="w-0 h-0 invisible"></div>
@@ -59,51 +53,20 @@
 <script lang="ts">
 import { defineComponent, computed, ref } from 'vue';
 
-// import { default as useTrainingMethods } from '@/composables/useTrainingMethods'
 import training_methods from "@/training_methods";
 // import { TrainingMethodCategory, TrainingMethod } from '@/composables/types'
 
 import useConfig from '@/composables/useConfig'
 const config = useConfig()
 
-import Papa from 'papaparse';
 // import { TrainingMethodCategory } from '@/composables/types';
 
 export default defineComponent({
 
 	setup() {
 
-		// const training_methods = useTrainingMethods()
-
 		const page_next_disabled = computed( () => config.dataset.file == null && config.model.file == null )
-
-		const parsed_status = ref<string>()
-
 		
-		// const dataset_parse = () => {
-		// 	console.log("")
-		// 	if (config.dataset.file == null)
-		// 	{
-		// 		console.log("DATASET IS NULL");
-		// 	}
-		// 	else
-		// 	{	
-		// 		console.log("PARSING...")
-		// 		Papa.parse(config.dataset.file, {
-		// 			error: (err, file) => {
-		// 				// this.file_dataset_status = "error event";
-		// 				console.log("ERROR:", err, file);
-		// 			},
-		// 			complete: (results) => {
-		// 				// this.file_dataset_status = "complete event";
-		// 				console.log("PARSED.", results);
-		// 				console.log(results.data[0]);
-		// 				parsed_status.value = JSON.stringify(results)
-		// 			}
-		// 		});
-		// 	}
-		// }
-
 		return {
 			
 			config,
@@ -111,10 +74,6 @@ export default defineComponent({
 
 			page_next_disabled,
 
-			parsed_status,
-			// dologthings: (what: any): void => {
-			// 	console.log(what)
-			// },
 		}
 
 	},

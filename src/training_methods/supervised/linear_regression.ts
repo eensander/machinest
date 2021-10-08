@@ -3,7 +3,7 @@ import { FeatureMeasurability } from '@/composables/useConfig/features'
 
 import regression, { DataPoint } from 'regression';
 
-export default class extends TrainingMethod<number, number> {
+export default class extends TrainingMethod {
 
 	static title = "(Multiple) Linear Regression"
 	static enabled = true
@@ -28,20 +28,35 @@ export default class extends TrainingMethod<number, number> {
 
 	fit(data: Data) {
 
-		console.log("LINRG: Fit called")
+		console.log("LINRG: Fit called", data)
 
-		return;
+		// convert data to requested format // the hacky way:
 
-		// data.x;
-		// const data_ = [[].concat(...data.x), [].concat(...data.y)];
-		const x: number[] = [].concat(...data.x as []);
+		const dp_data = [];
+
+		for (const row_i in data.x)
+		{
+			dp_data.push([
+				parseInt(data.x[row_i][0] as string),
+				parseInt(data.y[row_i][0] as string)
+			])
+		}
+
+		console.log("dp data: ", dp_data)
+
+
+		// const y: number[] = [].concat(...data.y as []);
 
 		// if (data.x == null || data.x.length == 0 || data.x[0].length == 0)
 		// 	return;
 
-		const data_f: [number[], number[]] = [[].concat(...data.x as []), [].concat(...data.y as [])];
+		// const data_f: [number[], number[]] = [[].concat(...data.x as []), [].concat(...data.y as [])];
 
 		// this.model = regression.polynomial(data_f as DataPoint[])
+		this.model = regression.linear(dp_data as DataPoint[])
+
+		console.log("model: ", this.model)
+
 	}
 
 	// train: () => {

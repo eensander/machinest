@@ -26,7 +26,8 @@
             </tr>
 			<template v-else>
 				<tr v-for="feature in config.features" :key="feature" :class="{'tr-dependant': feature.is_dependant}">
-					<td :class="td-index">{{ feature.index }}</td>
+					<td><input class="w-5 h-5 cursor-pointer" type="checkbox" v-model="feature.enabled" checked /></td>
+					<td class="td-index">{{ feature.index }}</td>
 					<td><input class="border border-gray-200 px-2 py-1" type="text" v-model="feature.name" /></td>
 					<td><input class="bg-gray-100 cursor-not-allowed border border-gray-200 px-2 py-1 w-20" readonly type="text" :value="data_first_values[feature.index]" /></td>
 					<td>
@@ -95,6 +96,7 @@ export default defineComponent({
 				if (config.features == null) config.features = []
 
 				const feature: Feature = {
+					enabled: true,
 					index: feature_i,
 					name: feature_name,
 					is_dependant: feature_i == 0,

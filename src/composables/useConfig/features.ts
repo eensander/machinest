@@ -23,6 +23,7 @@ export const FeatureMeasurability = {
 export type FeatureMeasurability = typeof FeatureMeasurability[keyof typeof FeatureMeasurability];
 
 export interface Feature {
+	enabled: boolean,
 	name: string,
 	index: number,
     datatype?: string,
@@ -64,19 +65,5 @@ const features: FeaturesConfig = [
 ]
 */
 const features: FeaturesConfig = null;
-
-export function initFeatures(features: string[]): void {
-	
-	const config = useConfig();
-
-	// 1. a papa la parse from files.ts (-> create api)? 
-	// 2. push returning features onto config
-	// 3. profit?
-
-	// config.features
-	// console.log(features, config)
-
-	// features = 
-}
 
 export default features

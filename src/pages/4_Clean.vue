@@ -33,11 +33,11 @@
 
 
     <div class="flex justify-between my-8">
-        <button @click="$router.push({ name: 'features' });" class="router-btn">
-            &#xff1c; 3. Features
+        <button @click="$router.push({ name: 'method' });" class="router-btn">
+            &#xff1c; 3. Method
         </button>
         <div class="w-0 h-0 invisible"></div>
-        <button @click="$router.push({ name: 'train' });" :disabled="page_next_disabled" class="router-btn">
+        <button @click="$router.push({ name: 'train' });" :disabled="false" class="router-btn">
             5. Train Model &#xff1e;
         </button>
     </div>

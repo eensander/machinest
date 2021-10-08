@@ -14,11 +14,13 @@
 		</div> -->
 
 		<div class="flex flex-row justify-between items-end">
-			<span class="text-xl font-medium text-blue-900">40% Completed</span>
-			<span class="text-sm font-thin text-gray-700">row 96 of 240</span>
+			<!-- <span class="text-xl font-medium text-blue-900">40% Completed</span> -->
+			<span class="text-xl font-medium text-blue-900">{{trainer.status.action}}</span>
+			<!-- <span class="text-sm font-thin text-gray-700">row 96 of 240</span> -->
+			<span class="text-sm font-thin text-gray-700">{{trainer.status.sub_action}}</span>
 		</div>
 		<div class="mt-2 rounded h-3 w-full bg-gray-200 overflow-hidden text-xs text-center text-gray-100">
-			<div :style="`width: ${30}%`" class="rounded w-1/3 h-full bg-blue-400 border-blue-500 border-b-2"></div>
+			<div :style="`width: ${trainer.status.progress ?? 0}%`" class="rounded w-1/3 h-full bg-blue-400 border-blue-500 border-b-2"></div>
 		</div>
 
 		<span class="my-4 block text-gray-700 text-sm">Status: {{ trainer.status.action }}</span>
@@ -53,14 +55,15 @@ import { defineComponent } from 'vue';
 import useConfig from '@/composables/useConfig';
 
 // import useTrainer from '@/composables/useTrainer';
-import {Trainer} from '@/composables/useTrainer';
+import { Trainer } from '@/composables/useTrainer';
 
 export default defineComponent({
 
 	setup() {
 
 		const config = useConfig()
-		const trainer = new Trainer(config)
+		const trainer = new Trainer()
+		// trainer.start()
 		
 		return {
 			config,

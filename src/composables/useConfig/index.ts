@@ -32,18 +32,6 @@ export interface UseConfig {
 	
 }
 
-// interface tmp { 
-
-// 	dataset_config: ParseConfig
-
-// 	training_method_category: TrainingMethodCategory | null,
-// 	training_method: TrainingMethod | null,
-
-// 	test: string | null,
-	
-// }
-// type UseConfig = FeaturesConfig & DatasetConfig & ModelConfig & tmp;
-
 const config: UseConfig = reactive({
 	
 	dataset,
