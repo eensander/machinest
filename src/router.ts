@@ -31,11 +31,24 @@ const router = VueRouter.createRouter({
 })
 
 router.beforeEach((To, From, Next) => {
-	if (To.name == 'features'){
-		if (config.dataset.file == null){
-			console.log("file is null jajaja")
-		}
-		console.log(config.dataset.file)
+	if (To.name == 'home' || To.name == 'load'){
+		// Misschien dataset opnieuw op null zetten? i.v.m. die bug van Lex
+		Next();
+	}
+	if (config.dataset.file == null) { // Alleen voor MVP zo houden, later ook model?
+		Next({ name: 'home' });
+		// Geen dataset notificatie
+	}
+
+	// Voor later
+	if (config.dataset.file == null && config.model.file == null) {
+		Next({ name: 'home' });
+	}
+	if (config.model.file == null && To.name == 'predict') {
+		Next({ name: 'home' });
+	}
+	if (config.dataset.file == null) {
+		Next({ name: 'home' })
 	}
 	Next();
 })
