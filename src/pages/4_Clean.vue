@@ -14,14 +14,14 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-if="config.features == null">
+            <tr v-if="enabled_features == null">
                 <td colspan="4">Loading...</td>
             </tr>
-            <tr v-else-if="config.features.length == 0">
+            <tr v-else-if="enabled_features.length == 0">
                 <td colspan="4">No features available in dataset [refetch]...</td>
             </tr>
 			<template v-else>
-				<tr v-for="feature in config.features" :key="feature">
+				<tr v-for="feature in enabled_features" :key="feature">
 					<td>{{ feature.name }}</td>
 					<td>
 						<button @click="toast('Scanning feature (hypothetically)')" class="router-btn">Scan</button>
@@ -46,9 +46,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 import useConfig from '@/composables/useConfig';
 import { useToast } from "vue-toastification";
+import features, { Feature, FeatureMeasurability } from '@/composables/useConfig/features';
 
 export default defineComponent({
 
@@ -57,9 +58,13 @@ export default defineComponent({
 		const config = useConfig()
 		const toast = useToast()
 
+		const enabled_features= computed(() => config.features?.filter(x => x.enabled));
+
 		return {
 			config,
-			toast
+			toast, 
+
+			enabled_features
 		}
 
 	}

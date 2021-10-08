@@ -32,23 +32,26 @@ export interface DatasetConfig {
 	// parsed: 
 }
 
-const dataset: DatasetConfig = {
-	file: null,
-	read_as_stream: false,
+function dataset(): DatasetConfig {
+	return {
+		file: null,
+		read_as_stream: false,
 
-	amount_rows: 0,
-	data_parsed_raw: [],
-	data_first_rows: [],
-	
-	context: {
-		first_row_is_header: true,
-		// delimiter: ','
-	},
+		amount_rows: 0,
+		data_parsed_raw: [],
+		data_first_rows: [],
+		
+		context: {
+			first_row_is_header: true,
+			// delimiter: ','
+		},
 
-	train_split_size: 0,
+		train_split_size: 0,
 
+	}
 }
 
+/*
 export function parse_dataset(): void {
 	
 	// 1. a papa la parse from files.ts (-> create api)? 
@@ -78,5 +81,7 @@ export function parse_dataset(): void {
 	toast("Failed parsing dataset")
 
 }
+*/
+
 
 export default dataset

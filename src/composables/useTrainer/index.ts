@@ -8,19 +8,7 @@ import { Feature } from "../useConfig/features";
 
 const toast = useToast()
 
-// export interface Trainer {
-// 	method: TrainingMethod;
-// 	status: {
-// 		progress: number,
-// 		running: boolean,
-// 		action: string
-// 	}
-// }
 export class Trainer {
-
-	// method: TrainingMethod | null = null;
-
-	// train_size_percentage: number|null = null;
 
 	method: TrainingMethod | null = null;
 	status = reactive({
@@ -32,22 +20,15 @@ export class Trainer {
 
 	config: UseConfig | null = null;
 
-	// constructor() {
-	// }
-
 	init() {
-		// let cur_config = useConfing
+		
 		this.config = toRaw(useConfig());
-		// console.log(this.config);
+		
 		if (this.config.training_method == null || this.config.features == null || this.config.features.length === 0)
 		{
 			console.log(this.config)
 			throw Error("Some required properties have not been configured")
 		}
-
-		// const data: Data = {x: [], y: []};
-		
-		// const features: Feature[] = this.config.features;
 
 		// dynamically init instance
 		const mclass: any = this.config["training_method"];
@@ -93,19 +74,8 @@ export class Trainer {
 
 }
 
-interface training_status {
-	linear_progress: boolean,
-}
-
-const training_status = reactive({
-	linear_progress: false,
-})
-
 // /*
 export default function useTrainer() {
-
-	return {
-		training_status
-	}
+	return null
 }
 // */

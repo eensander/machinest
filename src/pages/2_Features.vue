@@ -9,12 +9,12 @@
     <table class="styled-table">
         <thead>
             <tr>
-                <th></th>
+                <th><input class="w-5 h-5 cursor-pointer" type="checkbox" @input="check_enabled_changed" :checked="check_enabled_all" /></th>
                 <th>Index</th>
                 <th>Feature</th>
                 <th>First value</th>
                 <th>Measurability</th>
-                <th>Is dependant </th>
+                <th>Is dependant (Y)</th>
                 <!-- <th>Independant</th> -->
             </tr>
         </thead>
@@ -112,12 +112,35 @@ export default defineComponent({
 		// 	config.features
 		// }
 
+/*
+		const check_enabled_all = computed(() => {
+			// console.log("_all", config.features?.every(x => x.enabled))
+			return config.features?.every(x => x.enabled) ?? false
+		})
+*/
 		return {
 			config,
 			FeatureMeasurability,
 			data_first_values,
 
 			console: computed(() => console),
+
+			check_enabled_changed: (e: Event) => {
+				const target = <HTMLInputElement>e.target;
+				
+				config.features?.every(x => {
+					// console.log("every ", target.checked, x);
+					x.enabled = target.checked
+					return true;
+				})
+
+			},
+
+			check_enabled_all: computed(() => {
+				// console.log("_all", config.features?.every(x => x.enabled))
+				return config.features?.every(x => x.enabled) ?? false
+			}),
+
 		}
 
 	}

@@ -96,7 +96,7 @@
 import { defineComponent, ref, Ref, computed } from 'vue';
 
 import { useToast } from "vue-toastification";
-import useConfig from '@/composables/useConfig';
+import { default as useConfig, reset_config } from '@/composables/useConfig';
 import { default as dataset_default } from '@/composables/useConfig/dataset'
 // import { parse_dataset } from '@/composables/useConfig/dataset'
 
@@ -126,22 +126,29 @@ export default defineComponent({
 		}
 
 		const file_changed_dataset = (e: Event) => {
+			reset_config(config, {model: false});
+			parse_dataset_progress.value = null;
+
 			config.dataset.file = get_file_from_event(e);
 		}
         const file_changed_model = (e: Event) => {
+			reset_config(config, {dataset: false});
+			parse_dataset_progress.value = null;
+
             config.model.file = get_file_from_event(e);
         }
 
 		const file_clear_dataset = () => {
 			if(html_file_dataset.value != null)
 				html_file_dataset.value.value = "";
+			
 			config.dataset.file = null;
-			config.dataset = dataset_default;
 			parse_dataset_progress.value = null
 		}
 		const file_clear_model = () => {
 			if(html_file_model.value != null)
 				html_file_model.value.value = "";
+
 			config.model.file = null;
 			parse_model_progress.value = null
 		}
