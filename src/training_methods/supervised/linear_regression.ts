@@ -57,7 +57,7 @@ export default class extends TrainingMethod {
 		// const data_f: [number[], number[]] = [[].concat(...data.x as []), [].concat(...data.y as [])];
 
 		// this.model = regression.polynomial(data_f as DataPoint[])
-		this.model = regression.linear(dp_data.slice(0, 10) as DataPoint[])
+		this.model = regression.linear(dp_data as DataPoint[])
 
 		console.log("model: ", this.model)
 
