@@ -36,10 +36,14 @@ export default class extends TrainingMethod {
 
 		for (const row_i in data.x)
 		{
-			dp_data.push([
-				parseInt(data.x[row_i][0] as string),
-				parseInt(data.y[row_i][0] as string)
-			])
+			const x = parseFloat(data.x[row_i][0] as string)
+			const y = parseFloat(data.y[row_i][0] as string)
+
+			// move to more generic place
+			if (x == null || isNaN(x) || y == null || isNaN(y))
+				continue
+
+			dp_data.push([x, y])
 		}
 
 		console.log("dp data: ", dp_data)
@@ -53,7 +57,7 @@ export default class extends TrainingMethod {
 		// const data_f: [number[], number[]] = [[].concat(...data.x as []), [].concat(...data.y as [])];
 
 		// this.model = regression.polynomial(data_f as DataPoint[])
-		this.model = regression.linear(dp_data as DataPoint[])
+		this.model = regression.linear(dp_data.slice(0, 10) as DataPoint[])
 
 		console.log("model: ", this.model)
 

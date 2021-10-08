@@ -9,6 +9,7 @@
     <table class="styled-table">
         <thead>
             <tr>
+                <th></th>
                 <th>Index</th>
                 <th>Feature</th>
                 <th>First value</th>
