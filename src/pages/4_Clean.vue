@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>4. Data Cleaning</h1>
+    <h1>4. Data Cleaning and Preprocessing</h1>
 
     <p class="text-sm">Here you can configure each feature from the dataset which you supplied</p>
 

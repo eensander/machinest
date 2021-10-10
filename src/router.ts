@@ -9,7 +9,7 @@ import Method from './pages/3_Method.vue';
 import Features from './pages/2_Features.vue';
 import Clean from './pages/4_Clean.vue';
 import Train from './pages/5_Train.vue';
-import Predict from './pages/6_Predict.vue';
+import Evaluate from './pages/6_Evaluate.vue';
 
 const routes = [
 	{ name: 'home', path: '/', component: Home },
@@ -18,7 +18,7 @@ const routes = [
 	{ name: 'features', path: '/features', component: Features },
 	{ name: 'clean', path: '/clean', component: Clean },
 	{ name: 'train', path: '/train', component: Train },
-	{ name: 'predict', path: '/predict', component: Predict },
+	{ name: 'evaluate', path: '/evaluate', component: Evaluate },
 ]
 
 const router = VueRouter.createRouter({

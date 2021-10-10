@@ -1,6 +1,6 @@
 import linear_regression from "@/training_methods/supervised/linear_regression";
 import { generate } from "@vue/compiler-core";
-import { reactive, toRaw } from "vue";
+import { h, reactive, ref, toRaw } from "vue";
 import { useToast } from "vue-toastification";
 import { TrainingMethod, Data, DataType } from "../types";
 import useConfig, { UseConfig } from "../useConfig";
@@ -8,15 +8,43 @@ import { Feature } from "../useConfig/features";
 
 const toast = useToast()
 
-export class Trainer {
+type TrainerResultValue = {
+	type: "string" | "chartjs",
+	data: any
+}
+
+function TrainerResultRenderer(result: TrainerResultValue) {
+	switch(result.type)
+	{
+		case "string":
+			return h('span', result.data)
+			break;
+	}
+}
+
+type TrainerState = "waiting" | "running" | "finished";
+
+class Trainer {
 
 	method: TrainingMethod | null = null;
 	status = reactive({
-		progress: null,
-		running: false,
+		progress: null as number | null,
+		state: "waiting" as TrainerState,
 		action: "Idle",
 		sub_action: "Waiting for action"
+	});
+
+	results: {[cat: string]: {[key: string]: TrainerResultValue}} = reactive({
+		'cat': {'key': {type: 'string', data: 'hey'}},
+		'cat2': {'k2': {type: 'string', data: 'hey'}}
 	})
+
+	setResult(category: string, key: string, value: TrainerResultValue): void {
+		if (category !in this.results)
+			this.results[category] = {};
+		
+		this.results[category][key] = value
+	}
 
 	config: UseConfig | null = null;
 
@@ -69,13 +97,26 @@ export class Trainer {
 		this.method.base_fit()
 
 		this.status.action = "Model has been fit."
+		this.status.progress = 100;
+		// this.status.running = false;
+
+		this.status.state = "finished";
 
 	}
 
 }
 
-// /*
+const trainer = ref(new Trainer());
+
+
 export default function useTrainer() {
-	return null
+
+	const trainer_reset = () => {
+		trainer.value = new Trainer();
+	}
+
+	return {
+		trainer,
+		trainer_reset,
+	}
 }
-// */

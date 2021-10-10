@@ -28,6 +28,11 @@ export interface UseConfig {
 	training_method_category: TrainingMethodCategory | null,
 	training_method: TrainingMethod | null,
 
+	validation: {
+		train_split_size: number | null,
+		randomize: boolean
+	},
+
 	test: string | null,
 	
 }
@@ -41,6 +46,11 @@ const config: UseConfig = reactive({
 
 	training_method_category,
 	training_method,
+
+	validation: {
+		train_split_size: null,
+		randomize: true
+	},
 
 	features,
 	
@@ -58,6 +68,10 @@ export function reset_config(config: UseConfig, options: any = {}): void {
 	
 	config.training_method_category = training_method_category;
 	config.training_method = training_method;
+	config.validation = {
+		train_split_size: null,
+		randomize: true
+	},
 	config.features = features;
 	config.test = test;
 }

@@ -21,8 +21,6 @@ export interface DatasetConfig {
 		// delimiter: string
 	}
 
-	train_split_size: number,
-
 
 	// parse_progress: , // ?
 	// parsed: ,          // ?
@@ -45,8 +43,6 @@ function dataset(): DatasetConfig {
 			first_row_is_header: true,
 			// delimiter: ','
 		},
-
-		train_split_size: 0,
 
 	}
 }

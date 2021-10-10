@@ -3,6 +3,10 @@ import { FeatureMeasurability } from '@/composables/useConfig/features'
 
 import regression, { DataPoint } from 'regression';
 
+
+	// train: () => {
+	// 	console.log("simulating training row", row);
+	// },
 export default class extends TrainingMethod {
 
 	static title = "(Multiple) Linear Regression"
@@ -11,7 +15,7 @@ export default class extends TrainingMethod {
 	static conditions = {
 		streamable: false,
 		features: {
-			// x
+			// x 
 			dependant: {
 				amount: Infinity,
 				measure: [FeatureMeasurability.Discrete, FeatureMeasurability.Continuous]
@@ -30,8 +34,6 @@ export default class extends TrainingMethod {
 
 		console.log("LINRG: Fit called", data)
 
-		// convert data to requested format // the hacky way:
-
 		const dp_data = [];
 
 		for (const row_i in data.x)
@@ -48,24 +50,25 @@ export default class extends TrainingMethod {
 
 		console.log("dp data: ", dp_data)
 
-
-		// const y: number[] = [].concat(...data.y as []);
-
-		// if (data.x == null || data.x.length == 0 || data.x[0].length == 0)
-		// 	return;
-
-		// const data_f: [number[], number[]] = [[].concat(...data.x as []), [].concat(...data.y as [])];
-
-		// this.model = regression.polynomial(data_f as DataPoint[])
 		this.model = regression.linear(dp_data as DataPoint[])
 
 		console.log("model: ", this.model)
 
 	}
 
-	// train: () => {
-	// 	console.log("simulating training row", row);
-	// },
+	evaluate(data: Data) {
+		for (const row_i in data.x)
+		{
+			const x = parseFloat(data.x[row_i][0] as string)
+			const y = parseFloat(data.y[row_i][0] as string)
+
+			// move to more generic place
+			if (x == null || isNaN(x) || y == null || isNaN(y))
+				continue
+
+			// dp_data.push([x, y])
+		}
+	}
 
 	predict(data: Data) {
 		// return row_y;

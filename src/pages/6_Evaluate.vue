@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h1>6. Predict</h1>
+    <h1>6. Evaluate</h1>
 
-    <p class="text-sm">This page allows you to predict dependant values by providing independant values</p>
+    <p class="text-sm">This page allows you to evaluate the trained model by rendering its results and predicting values of dependant features by providing values of independant features</p>
 
     <hr class="mt-1" />
 
@@ -24,13 +24,11 @@
 	</div>
 
     <div class="flex justify-between my-8">
-        <button @click="$router.push({ name: 'method' });" class="router-btn">
-            &#xff1c; 2. Method
+        <button @click="$router.push({ name: 'train' });" class="router-btn">
+            &#xff1c; 5. Train
         </button>
         <div class="w-0 h-0 invisible"></div>
-        <button @click="$router.push({ name: 'home' });" :disabled="page_next_disabled" class="router-btn">
-            4. Data Cleaning &#xff1e;
-        </button>
+
     </div>
 
   </div>
