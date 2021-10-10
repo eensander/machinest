@@ -84,22 +84,25 @@ h3 {
 
 .router-btn, .btn {
 
-    @apply font-normal px-4 py-1 border-b-4 ;
-    @apply bg-blue-600 border-blue-400 text-white; // default btn style
+    @apply font-normal px-4 py-1 border-b-4 rounded-sm;
+    // @apply bg-blue-600 border-blue-400 text-white; // default btn style.
+	@apply bg-blue-600 hover:bg-blue-500 text-white border-blue-800;
 
     &.btn-green {
-        @apply bg-green-500 border-green-300 text-white;
+        // @apply bg-green-500 border-green-300 text-white;
+		@apply bg-green-500 hover:bg-green-400 text-white border-green-600
     }
 
     &.btn-gray {
-        @apply bg-gray-600 border-gray-400 text-white;
+        // @apply bg-gray-600 border-gray-400 text-white;
+		@apply bg-gray-600 hover:bg-gray-500 text-white border-gray-800
     }
 
     &[disabled] {
         // @apply bg-gray-500 border-gray-400 cursor-not-allowed;
         @apply cursor-not-allowed;
         opacity: 0.6;
-        // pointer-events: none;
+        pointer-events: none;
     }
 
 }

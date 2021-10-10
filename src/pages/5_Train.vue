@@ -13,7 +13,6 @@
 			v-model="train_split_size_percentage"
 			color="#1E40AF" track-color="#E0E0E0" :height="8" />
 		<span class="w-full text-right w-full text-center block text-gray-700 mt-2">
-			<!-- {{ train_split_size_percentage_model }}% -->
 			<span class="text-lg mr-2">{{ train_split_size_percentage }}%</span>
 			<span class="font-light mr-2">({{ config.validation.train_split_size }} of {{ config.dataset.amount_rows ?? 0 }} rows)</span>
 		</span>
@@ -41,10 +40,10 @@
 		<span v-if="false && trainer.status.action" class="my-4 block text-gray-700 text-sm">Status: {{ trainer.status.action }}</span>
 
 		<div class="mt-4 w-full flex justify-end">
-			<button class="btn btn-green" @click="trainer_start()" :disabled="trainer.status.state != 'waiting'">
+			<button class="btn btn-green" @click="trainer_start()" :disabled="trainer.status.state != 'ready'">
 				Start
 			</button>
-			<button class="btn btn-gray ml-2" :disabled="trainer.status.state != 'running'">
+			<button class="btn btn-gray ml-2" :disabled="true && trainer.status.state != 'running'">
 				Pause
 			</button>
 			<button class="btn btn-gray ml-2" @click="trainer_reset()" :disabled="trainer.status.state != 'finished'">
@@ -61,7 +60,7 @@
 		</div>
         <div class="w-0 h-0 invisible"></div>
 		<div class="flex flex-col space-y-2 md:items-end">
-			<button :disabled="!(trainer.status.state == 'finished' && Object.values(trainer.results).some(x => Object.keys(x).length))" class="router-btn">
+			<button @click="$router.push({ name: 'evaluate' });" :disabled="!(trainer.status.state == 'finished' && Object.values(trainer.results).some(x => Object.keys(x).length))" class="router-btn">
 				Evaluate &#xff1e;
 			</button>
 		</div>
@@ -90,7 +89,6 @@ export default defineComponent({
 
 		const toast = useToast()
 		const config = useConfig()
-
 		
 		const { trainer, trainer_reset } = useTrainer();
 

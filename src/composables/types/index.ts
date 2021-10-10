@@ -1,24 +1,22 @@
 import Papa from 'papaparse';
 import { UseConfig } from '../useConfig';
 import {Feature, FeatureMeasurability} from '../useConfig/features'
+import { Trainer } from '../useTrainer';
 
-// export type Row = Array<string | number | boolean>
-// export type Data<TX extends any, TY extends any> = { x: any[][], y: any[][] }
 export type DataType = string | number | boolean;
 export type Data = { x: DataType[][], y: DataType[][] }
 
-// TODO: move these to trainingMethods config or useTrainingMethods file ? should these two maybe get merged?
-/*export interface TrainingMethod {
-    name: string,
-    fit(data: Row | Row[]): void
-    test(data: Row | Row[]): void
-    train?(): void
-}*/
+export type ModelResult = {
+	type: "text" | "code" | "katex" | "chartjs",
+	data: any
+}
+
 
 // https://stackoverflow.com/a/59488269
 // export interface TrainingMethodConstructor {
 // 	new(): any;
 // }
+// TODO: move these to trainingMethods config or useTrainingMethods file ? should these two maybe get merged?
 export interface TrainingMethod {
 
 	new(): any;
@@ -48,6 +46,8 @@ export interface TrainingMethod {
 	fit(data: Data): void
 	fit_inc?(data: Data): void
 
+	evaluate(Data: Data): void
+
 }
 
 export abstract class TrainingMethod {
@@ -61,6 +61,31 @@ export abstract class TrainingMethod {
 			independant: { amount: 1, measure: null },
 		}
 	};
+
+	trainer: Trainer;
+
+	results: {[key: string]: ModelResult} = {}
+
+	get_results() {
+		return this.results;
+	}
+
+	set_result(key: string, value: ModelResult | string | number): void {
+		if (typeof value == "string") {
+			const val_str = value;
+			value = {type: 'text', data: value}
+		} else if (typeof value == "number") {
+			const val_str = value;
+			value = {type: 'code', data: value}
+		}
+
+		this.results[key] = value
+	}
+
+	constructor(trainer: Trainer) {
+		this.trainer = trainer;
+	}
+
 
 	load_dataset(dataset: UseConfig["dataset"])	{
 		this.dataset = dataset;

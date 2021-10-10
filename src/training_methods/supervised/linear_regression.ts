@@ -51,6 +51,9 @@ export default class extends TrainingMethod {
 		console.log("dp data: ", dp_data)
 
 		this.model = regression.linear(dp_data as DataPoint[])
+		this.set_result('coefficient', this.model.equation[0]);
+		this.set_result('y-intercept', this.model.equation[1]);
+		this.set_result('equation', {type: 'katex', data: this.model.string});
 
 		console.log("model: ", this.model)
 
@@ -75,7 +78,7 @@ export default class extends TrainingMethod {
 	}
 
 	plot() {
-		console.log('bruh')
+		// console.log('bruh')
 	}
 
 }
