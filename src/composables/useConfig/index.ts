@@ -5,6 +5,7 @@ import { TrainingMethod, TrainingMethodCategory } from '../types'
 
 // import { default as useTrainingMethods } from '../useTrainingMethods'
 
+import useTrainer from '../useTrainer';
 
 import { default as features, FeaturesConfig } from './features'
 import { default as dataset, DatasetConfig } from './dataset'
@@ -74,6 +75,9 @@ export function reset_config(config: UseConfig, options: any = {}): void {
 	},
 	config.features = features;
 	config.test = test;
+
+	const {trainer_reset} = useTrainer()
+	trainer_reset()
 }
 
 export default function useConfig(): UseConfig {

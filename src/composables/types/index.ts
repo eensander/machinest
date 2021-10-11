@@ -4,7 +4,9 @@ import {Feature, FeatureMeasurability} from '../useConfig/features'
 import { Trainer } from '../useTrainer';
 
 export type DataType = string | number | boolean;
-export type Data = { x: DataType[][], y: DataType[][] }
+export type DataRow = {[index: number]: DataType};
+// export type Data = { x: DataType[][], y: DataType[][] }
+export type Data = { x: DataRow[], y: DataRow[] }
 
 export type ModelResult = {
 	type: "text" | "code" | "katex" | "chartjs",
@@ -41,7 +43,7 @@ export interface TrainingMethod {
 	test?(data:  Data): void
 	plot?(): void
 
-	predict(data: Data): void
+	predict(data_x: Data['x'], features_y: Feature[]): Data['y']
 
 	fit(data: Data): void
 	fit_inc?(data: Data): void
@@ -111,10 +113,12 @@ export abstract class TrainingMethod {
 	}
 	*/
 
+	/*
 	datatype_is_2d(datatype: DataType[] | DataType[][]): datatype is DataType[]  {
 		// return true
 		return typeof (datatype as DataType[]) === "object"
 	}
+	*/
 
 	// move later ?
 	dataset_to_data(raw_data: string[][], features: Feature[]): Data {
@@ -130,16 +134,16 @@ export abstract class TrainingMethod {
 			}
 
 			// console.log(raw_row); break;
-			const cur_x: DataType[] = []
-			const cur_y: DataType[] = []
+			const cur_x: DataRow = {}
+			const cur_y: DataRow = {}
 
 			for (const feature of features.filter(x => x.enabled) )
 			{
 				const feature_val = raw_row[feature.index];
 				if (feature.is_dependant)	// Y
-					cur_y.push(feature_val)
+					cur_y[feature.index] = feature_val
 				else						// X
-					cur_x.push(feature_val)
+					cur_x[feature.index] = feature_val
 			}
 
 			// console.log(cur_x)
@@ -191,16 +195,17 @@ export abstract class TrainingMethod {
 
 	}
 
-	base_predict(data: Data): void {
-		this.predict(data)
+	base_predict(data_x: Data['x'], features_y: Feature[]): Data['y'] {
+		return this.predict(data_x, features_y)
 	}
 
+	/*
 	base_test(data: Data): void {
-		this.predict(data);
+		this.predict(data.x);
 		// this.score(this.predict(data), data)
 		// TODO : calculate score or something?
 	}
-
+	*/
 }
 
 

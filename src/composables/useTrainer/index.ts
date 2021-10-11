@@ -1,8 +1,8 @@
 import linear_regression from "@/training_methods/supervised/linear_regression";
 import { generate } from "@vue/compiler-core";
-import { h, reactive, ref, toRaw, VNode } from "vue";
+import { h, reactive, Ref, ref, toRaw, VNode } from "vue";
 import { useToast } from "vue-toastification";
-import { TrainingMethod, Data, DataType, ModelResult } from "../types";
+import { TrainingMethod, Data, DataType, ModelResult, DataRow } from "../types";
 import useConfig, { UseConfig } from "../useConfig";
 import { Feature } from "../useConfig/features";
 
@@ -136,11 +136,25 @@ export class Trainer {
 		}
 	}
 
+	user_predict(data_x: DataRow, result_y: DataRow): Data['y'] {
+
+		const data_y = this.method!.base_predict([data_x], this.config!.features!.filter(x => x.enabled && x.is_dependant));
+
+		for (const [col_i, val] of Object.entries(data_y[0]))
+		{
+			result_y[parseInt(col_i)] = val;
+		}
+
+		return data_y;
+	}
+
 	finished() {
 		this.status.state = "finished";
 		this.results['Model'] = this.method!.get_results();
 		console.log("RESULTS", this.results['Model'])
 	}
+
+
 
 }
 

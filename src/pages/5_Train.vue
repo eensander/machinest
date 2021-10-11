@@ -8,7 +8,7 @@
 
 	<div class="my-4">
 		<h3>Validation</h3>
-		<span class="text-sm my-3 block">In this section the portion of the dataset that will be used for training can be chosen. The data not used to trianing will be used to more objectively test the performance of the model.</span>
+		<span class="text-sm my-3 block">In this section the portion of the dataset that will be used for training can be chosen. The data not used for training will be used to more objectively test the performance of the model.</span>
 		<vue3-slider
 			v-model="train_split_size_percentage"
 			color="#1E40AF" track-color="#E0E0E0" :height="8" />
