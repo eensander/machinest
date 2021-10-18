@@ -2,7 +2,7 @@
   <div class="flex flex-col">
     <h1>3. Training Method</h1>
 
-    <p class="text-sm">Please select the which you would like to use.</p>
+    <p class="text-sm">Please select the which training method you would like to use.</p>
 	
     <hr class="my-4" />
 
