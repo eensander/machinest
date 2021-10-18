@@ -2,7 +2,7 @@
   <div>
     <h1>5. Train Model</h1>
 
-    <p class="text-sm">Here you can configure each feature from the dataset which you supplied</p>
+    <p class="text-sm">This section allows you to execute operations on the model using the data.</p>
 
     <hr class="my-4" />
 

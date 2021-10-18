@@ -2,7 +2,7 @@
   <div>
     <h1>2. Feature Configuration</h1>
 
-    <p class="text-sm">Here you can configure each feature from the dataset which you supplied</p>
+    <p class="text-sm">Here you can configure each feature from the dataset.</p>
 	<!-- <span class="my-10 block">SPACING</span> -->
     <hr class="my-4" >
 

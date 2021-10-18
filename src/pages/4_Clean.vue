@@ -2,7 +2,7 @@
   <div>
     <h1>4. Data Cleaning and Preprocessing</h1>
 
-    <p class="text-sm">Here you can configure each feature from the dataset which you supplied</p>
+    <p class="text-sm">In this section, invalid data can be detected and eliminated. Because detecting invalid data requires scanning the dataset, please choose the features on which you would like the cleaning to be performed.</p>
 
     <hr class="my-4" />
 
