@@ -29,17 +29,17 @@
 				<tr v-for="feature in config.features" :key="feature" :class="{'tr-dependant': feature.is_dependant}">
 					<td><input class="w-5 h-5 cursor-pointer" type="checkbox" v-model="feature.enabled" checked /></td>
 					<td class="td-index">{{ feature.index }}</td>
-					<td><input class="border border-gray-200 px-2 py-1" type="text" v-model="feature.name" /></td>
+					<td><input class="border border-gray-200 px-2 py-1" type="text" v-model="feature.name" :disabled="!feature.enabled" /></td>
 					<td><input class="bg-gray-100 cursor-not-allowed border border-gray-200 px-2 py-1 w-20" readonly type="text" :value="data_first_values[feature.index]" /></td>
 					<td>
-						<select class="border border-gray-200 px-2 py-1 cursor-pointer" v-model="feature.measurability">
+						<select class="border border-gray-200 px-2 py-1 cursor-pointer" v-model="feature.measurability" :disabled="!feature.enabled">
 							<option v-for="(option, option_key) in FeatureMeasurability" :key="option_key" :value="option">
 								{{ option_key }}
 							</option>
 						</select>
 						<!-- <input class="border border-gray-200 px-2 py-1" type="text" v-model="feature.measurability"  /> -->
 					</td>
-					<td><input class="w-5 h-5 cursor-pointer" type="checkbox" v-model="feature.is_dependant" /></td>
+					<td><input class="w-5 h-5 cursor-pointer" type="checkbox" v-model="feature.is_dependant" :disabled="!feature.enabled" /></td>
 				</tr>
 			</template>
         </tbody>
@@ -50,7 +50,7 @@
             &#xff1c; 1. Load
         </button>
         <div class="w-0 h-0 invisible"></div>
-        <button @click="$router.push({ name: 'method' });" :disabled="false" class="router-btn">
+        <button @click="$router.push({ name: 'method' });" :disabled="config.features.every(x => x.enabled == false)" class="router-btn">
             3. Method &#xff1e;
         </button>
     </div>
@@ -156,4 +156,14 @@ table {
 	}
 }
 
+input {
+	&[disabled] {
+		@apply bg-gray-100 cursor-default;
+	}
+}
+select {
+	&[disabled] {
+		@apply bg-gray-100 cursor-default;
+	}
+}
 </style>

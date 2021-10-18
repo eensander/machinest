@@ -47,6 +47,8 @@ export default defineComponent({
 @tailwind components;
 @tailwind utilities;
 
+@import '~katex/dist/katex.min.css';
+
 /*
 .sidebar {
 	@apply w-72 border-r border-gray-300 bg-gray-100 p-4 pt-32;

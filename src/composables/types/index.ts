@@ -10,7 +10,8 @@ export type Data = { x: DataRow[], y: DataRow[] }
 
 export type ModelResult = {
 	type: "text" | "code" | "katex" | "chartjs",
-	data: any
+	object?: any, // for optionally storing object like chartjs
+	data: any,
 }
 
 
@@ -74,10 +75,8 @@ export abstract class TrainingMethod {
 
 	set_result(key: string, value: ModelResult | string | number): void {
 		if (typeof value == "string") {
-			const val_str = value;
 			value = {type: 'text', data: value}
 		} else if (typeof value == "number") {
-			const val_str = value;
 			value = {type: 'code', data: value}
 		}
 
@@ -189,7 +188,7 @@ export abstract class TrainingMethod {
 		else if (this.dataset.data_parsed_raw?.length > 0)
 		{
 			const data = this.dataset_to_data(this.dataset.data_parsed_raw, this.features)
-			console.log("DATASET TO DATA: ", data)
+			// console.log("DATASET TO DATA: ", data)
 			this.fit(data)
 		}
 

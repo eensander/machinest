@@ -1,10 +1,14 @@
-import linear_regression from "@/training_methods/supervised/linear_regression";
-import { generate } from "@vue/compiler-core";
-import { h, reactive, Ref, ref, toRaw, VNode } from "vue";
+// import linear_regression from "@/training_methods/supervised/linear_regression";
+// import { generate } from "@vue/compiler-core";
+import { h, ref, toRaw, VNode, compile } from "vue";
 import { useToast } from "vue-toastification";
 import { TrainingMethod, Data, DataType, ModelResult, DataRow } from "../types";
 import useConfig, { UseConfig } from "../useConfig";
-import { Feature } from "../useConfig/features";
+// import { Feature } from "../useConfig/features";
+
+import katex from 'katex';
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
 
 const toast = useToast()
 
@@ -13,16 +17,18 @@ function RenderModelResult(result: ModelResult): VNode {
 	{
 		case "text":
 			return h('span', result.data.toString())
-			break;
 		case "code":
 			return h('pre', result.data.toString())
-			break;
-		case "katex":
-			return h('span', result.data.toString())
-			break;
+		case "chartjs": {
+			const chartjs_id = Date.now();
+			return h('canvas', { id: `chartjs_canvas_${chartjs_id}`, onVnodeMounted: (e) => { result.object = new Chart(`chartjs_canvas_${chartjs_id}`, result.data); console.log(result.object) } })
+		}
+		case "katex": {
+			const html = katex.renderToString(result.data.toString());
+			return h('div', {innerHTML: html} )
+		}
 		default:
 			return h('span', result.data.toString())
-			break;
 	}
 }
 
@@ -88,7 +94,7 @@ export class Trainer {
 		this.method.features = this.config.features;
 
 		// getting static fields of instance: https://stackoverflow.com/a/19470894
-		console.log("NAME:",this.method, Object.getPrototypeOf(this.method).constructor.title)
+		// console.log("NAME:",this.method, Object.getPrototypeOf(this.method).constructor.title)
 
 	}
 
