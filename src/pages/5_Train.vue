@@ -6,7 +6,7 @@
 
     <hr class="my-4" />
 
-	<div class="my-4">
+	<div class="my-4 hidden">
 		<h3>Validation</h3>
 		<span class="text-sm my-3 block">In this section the portion of the dataset that will be used for training can be chosen. The data not used for training will be used to more objectively test the performance of the model.</span>
 		<vue3-slider
