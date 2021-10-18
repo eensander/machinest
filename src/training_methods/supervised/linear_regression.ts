@@ -3,11 +3,6 @@ import { Feature, FeatureMeasurability } from '@/composables/useConfig/features'
 
 import regression, { DataPoint } from 'regression';
 
-
-// train: () => {
-// 	console.log("simulating training row", row);
-// },
-
 export default class extends TrainingMethod {
 
 	static title = "Linear Regression"
@@ -50,8 +45,6 @@ export default class extends TrainingMethod {
 
 			dp_data.push([x, y])
 		}
-
-		// console.log("dp data: ", dp_data)
 
 		this.model = regression.linear(dp_data as DataPoint[])
 

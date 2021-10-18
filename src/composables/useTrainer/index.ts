@@ -62,15 +62,6 @@ export class Trainer {
 		return new_results;
 	}
 
-/*
-	set_result(category: string, key: string, value: ModelResult): void {
-		if (category !in this.results)
-			this.results[category] = {};
-		
-		this.results[category][key] = value
-	}
-*/
-
 	config: UseConfig | null = null;
 
 	init() {
@@ -157,10 +148,8 @@ export class Trainer {
 	finished() {
 		this.status.state = "finished";
 		this.results['Model'] = this.method!.get_results();
-		console.log("RESULTS", this.results['Model'])
+		// console.log("RESULTS", this.results['Model'])
 	}
-
-
 
 }
 
