@@ -1,8 +1,8 @@
 # Transfer Document
 
-This application has been developed on behalf of the researchlab Data Intelligence at Zuyd Hogeschool in The Netherlands.
+This application has been developed on behalf of the research lab Data Intelligence at Zuyd Hogeschool in The Netherlands.
 
-The application serves as a demonstration of performing Machine Learning completely inside of a browser.
+The application serves as a demonstration of performing Machine Learning completely inside a web browser.
 With developing the application, there has been a primary focus on extensibility.
 
 ## Screenshots
@@ -14,15 +14,15 @@ With developing the application, there has been a primary focus on extensibility
 
 ## Installation
 
-The application has been using the frontend framework VueJS. For general deployment guidelines please refer to [VueJS's deployment guidelines](https://cli.vuejs.org/guide/deployment.html#general-guidelines)
+The application has been using the frontend framework VueJS. For general deployment guidelines, please refer to [VueJS's deployment guidelines](https://cli.vuejs.org/guide/deployment.html#general-guidelines)
 
 ### Requirements
 
-For cloning this repository it is advised to have git installed on your system. Deploying this application for production purposes requires to have docker installed. For development purposes it is required to have node and npm installed, for building or additionaly serving the application locally.
-Using the application requires only a webbrowser. However, tests have only been performed on the latest versions of the most popular browsers (Firefox, Google Chrome, ...).
+For cloning this repository, it is advised to have git installed on your system. Deploying this application for production purposes requires having docker installed. For development purposes it is required to have node and npm installed, for building or serving the application locally.
+Using the application requires only a web browser. However, tests have only been performed on the latest versions of the most popular web browsers (Firefox, Google Chrome, ...).
 
 
-The first step for eighter purpose is cloning this git repository and changing into the cloned directory.
+The first step for both purposes is cloning this git repository and changing into the cloned directory.
 ```bash
 git clone https://[].com/bd02-ai-casus
 cd bd02-ai-casus
@@ -53,8 +53,8 @@ npm run serve
 <details>
   <summary>UML representation of training relevant classes</summary>
   This UML diagram is bound closely to the original types and classes used in the implementation in TypeScript. Not all classes, interfaces and types have been included due to its large extent.
-  It is important to note that a concrete ModelTrainer should atleast include the properties and methods described in the ModelTrainer interface. 
-  A ModelTrainer can communicate training results using it's abstract set_results(...) function.
+  It is important to note that a concrete ModelTrainer should at least include the properties and methods described in the ModelTrainer interface. 
+  A ModelTrainer can communicate training results using its abstract set_results(...) function.
 
   ![image](https://user-images.githubusercontent.com/50321538/138298353-8a91cfab-805a-4e14-8437-54a37ea69ed7.png)
 </details>
@@ -80,7 +80,7 @@ export default class extends SupervisedModelTrainer { /* ... */ }
 Make sure that this class implements all mandatory properties of `ModelTrainer`.
 For a basic example of what a concrete training method could look like, refer to `src/model_trainers/supervised/linear_regression.ts`.
 
-When the desired logic has been implemented, make sure the training method is included inside of `src/model_trainers/index.ts`.
+When the desired logic has been implemented, make sure the training method is included inside `src/model_trainers/index.ts`.
 
 # Notes
 
@@ -88,4 +88,4 @@ Some possibly desirable features are currently not completely implemented:
  - It is not possible to export or import a (pre-)trained model.
  - The chosen features are not checked against the conditions specified in a ModelTrainer,
  - It is not possible to split a dataset in a training/testing set for validation,
- - Calculating a score is not generally implemented, but can be manaully implemented inside of a ModelTrainer, using the set_result() function.
+ - Calculating a score is not generally implemented, but can be manually implemented inside a ModelTrainer, using the set_result() function.
