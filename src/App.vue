@@ -13,7 +13,7 @@
 		<div id="main" class="">
 			<div class="self-center mt-8 mb-10 border-b-4 border-gray-300 pb-2">
 				<!-- <img class="" alt="Vue logo" src="./assets/logo.png"> -->
-				<span class="text-5xl uppercase font-bold text-blue-800">Machinest</span>
+				<span @click="$router.push({ name: 'home' });" class="cursor-pointer text-5xl uppercase font-bold text-blue-800">Machinest</span>
 			</div>
 			
 			<router-view></router-view>

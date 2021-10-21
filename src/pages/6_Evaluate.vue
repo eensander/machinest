@@ -6,8 +6,6 @@
 
     <hr class="my-2" />
 
-	<h3 class="mt-4 mb-2">Results</h3>
-
 	<h3 class="mt-4 mb-2">Make predictions</h3>
 
     <div class="mt-2 border border-gray-200 rounded-md p-4 flex flex-col md:flex-row md:space-x-2">
@@ -41,6 +39,9 @@
 
 		</div>
 	</div>
+	
+	<h3 class="mt-4 mb-2">Results</h3>
+
 
 	<div class="" v-if="Object.keys(trainer.results).length > 0">
 		<table class="styled-table border border-gray-300">

@@ -11,13 +11,13 @@ export default [
 	{
 		name: "unsupervised",
 		methods: [
-			// require('../learning_methods/supervised/linear_regression')
+			// ...
 		]
 	},
 	{
 		name: "reinforcement",
 		methods: [
-			// require('../learning_methods/supervised/linear_regression')
+			// ...
 		]
 	},
 ]; 

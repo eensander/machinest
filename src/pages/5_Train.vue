@@ -6,16 +6,20 @@
 
     <hr class="my-4" />
 
-	<div class="my-4 hidden">
-		<h3>Validation</h3>
-		<span class="text-sm my-3 block">In this section the portion of the dataset that will be used for training can be chosen. The data not used for training will be used to more objectively test the performance of the model.</span>
-		<vue3-slider
-			v-model="train_split_size_percentage"
-			color="#1E40AF" track-color="#E0E0E0" :height="8" />
-		<span class="w-full text-right w-full text-center block text-gray-700 mt-2">
-			<span class="text-lg mr-2">{{ train_split_size_percentage }}%</span>
-			<span class="font-light mr-2">({{ config.validation.train_split_size }} of {{ config.dataset.amount_rows ?? 0 }} rows)</span>
-		</span>
+	<div class="not-implemented">
+		<span class="not-implemented-message">This feature has not been implemented in this demonstration, but could be included in future releases</span>
+		<div class="my-4 ">
+			<h3>Validation</h3>
+			<span class="text-sm my-3 block">In this section the portion of the dataset that will be used for training can be chosen. The data not used for training will be used to more objectively test the performance of the model.</span>
+
+			<vue3-slider
+				v-model="train_split_size_percentage"
+				color="#1E40AF" track-color="#E0E0E0" :height="8" />
+			<span class="w-full text-right w-full text-center block text-gray-700 mt-2">
+				<span class="text-lg mr-2">{{ train_split_size_percentage }}%</span>
+				<span class="font-light mr-2">({{ config.validation.train_split_size }} of {{ config.dataset.amount_rows ?? 0 }} rows)</span>
+			</span>
+		</div>
 	</div>
 
 	<h3>Execute</h3>
@@ -147,4 +151,45 @@ export default defineComponent({
 .vue3-slider .handle.hover {
     transform: scale(1.65) !important;
 }
+
+.not-implemented {
+	position: relative;
+	user-select: none;
+	cursor: not-allowed;
+	transition: all 2s;
+
+	.not-implemented-message {
+		display: none;
+	}
+	&:before {
+		transition: background 0.2s;
+	}
+	
+	&:hover {
+		.not-implemented-message {
+			text-align: center;
+			display: block;
+			position: absolute;
+			width: 80%;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			z-index: 999;
+			color: white;
+			padding: 1rem;
+			background: rgba(16, 16, 16, 0.8);
+		}
+
+		&:before {
+			content: "";
+			position: absolute;
+			top: 0; left: 0;
+			height: 100%; width: 100%;
+			background: rgba(65, 65, 66, 0.4);
+			z-index: 998;
+		}
+	}
+
+}
+
 </style>
