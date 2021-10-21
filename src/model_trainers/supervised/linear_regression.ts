@@ -1,9 +1,9 @@
-import { Data, TrainingMethod } from '@/composables/types'
+import { Data, SupervisedModelTrainer } from '@/composables/useTrainer/modelTrainer'
 import { Feature, FeatureMeasurability } from '@/composables/useConfig/features'
 
 import regression, { DataPoint } from 'regression';
 
-export default class extends TrainingMethod {
+export default class extends SupervisedModelTrainer {
 
 	static title = "Linear Regression"
 	static enabled = true

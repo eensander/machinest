@@ -1,9 +1,6 @@
-import { reactive, Ref, ref } from "vue";
+import { reactive } from "vue";
 
-import { TrainingMethod, TrainingMethodCategory } from '../types'
-// import { ParseConfig } from 'papaparse'
-
-// import { default as useTrainingMethods } from '../useTrainingMethods'
+import { ModelTrainer, ModelTrainerCategory } from '../useTrainer/modelTrainer'
 
 import useTrainer from '../useTrainer';
 
@@ -13,8 +10,8 @@ import { default as model, ModelConfig } from './model'
 
 // const dataset_config = {}
 
-const training_method_category = null
-const training_method = null
+const model_trainer_category = null
+const model_trainer = null
 
 const test = null
 
@@ -26,8 +23,8 @@ export interface UseConfig {
 
 	// dataset_config: ParseConfig
 
-	training_method_category: TrainingMethodCategory | null,
-	training_method: TrainingMethod | null,
+	model_trainer_category: ModelTrainerCategory | null,
+	model_trainer: ModelTrainer | null,
 
 	validation: {
 		train_split_size: number | null,
@@ -45,8 +42,8 @@ const config: UseConfig = reactive({
 
 	// dataset_config,
 
-	training_method_category,
-	training_method,
+	model_trainer_category,
+	model_trainer,
 
 	validation: {
 		train_split_size: null,
@@ -67,8 +64,8 @@ export function reset_config(config: UseConfig, options: any = {}): void {
 	if (options.model ?? true)
 		config.model = model;
 	
-	config.training_method_category = training_method_category;
-	config.training_method = training_method;
+	config.model_trainer_category = model_trainer_category;
+	config.model_trainer = model_trainer;
 	config.validation = {
 		train_split_size: null,
 		randomize: true

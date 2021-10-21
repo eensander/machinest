@@ -1,12 +1,16 @@
 import Papa from 'papaparse';
 import { UseConfig } from '../useConfig';
-import {Feature, FeatureMeasurability} from '../useConfig/features'
-import { Trainer } from '../useTrainer';
+import { Feature, FeatureMeasurability } from '../useConfig/features'
+import { Trainer } from './trainer';
 
 export type DataType = string | number | boolean;
 export type DataRow = {[index: number]: DataType};
-// export type Data = { x: DataType[][], y: DataType[][] }
 export type Data = { x: DataRow[], y: DataRow[] }
+
+export interface ModelTrainerCategory {
+    name: string;
+    trainers: ModelTrainer[];
+}
 
 export type ModelResult = {
 	type: "text" | "code" | "katex" | "chartjs",
@@ -14,24 +18,20 @@ export type ModelResult = {
 	data: any,
 }
 
-
 // https://stackoverflow.com/a/59488269
 // export interface TrainingMethodConstructor {
 // 	new(): any;
 // }
 // TODO: move these to trainingMethods config or useTrainingMethods file ? should these two maybe get merged?
-export interface TrainingMethod {
+export interface ModelTrainer {
 
 	new(): any;
-
-	testing: string;
 
 	data: Data, // needed?
 	dataset: UseConfig["dataset"],
 
 	features: Feature[];
-
-	// abstract title: string,
+	
 	conditions: {
 		streamable: boolean | null,
 		features: {
@@ -40,24 +40,23 @@ export interface TrainingMethod {
 		}
 	}
 
-	score?(predicted_y: Data, real_y: Data): void
-	test?(data:  Data): void
-	plot?(): void
+	// score?(predicted_y: Data, real_y: Data): void
+	// test?(data:  Data): void
 
 	predict(data_x: Data['x'], features_y: Feature[]): Data['y']
 
 	fit(data: Data): void
 	fit_inc?(data: Data): void
 
-	evaluate(Data: Data): void
+	evaluate(data: Data): void
 
 }
 
-export abstract class TrainingMethod {
+export abstract class ModelTrainer {
 
 	static title: string;
 	
-    conditions: TrainingMethod["conditions"] = {
+    conditions: ModelTrainer["conditions"] = {
 		streamable: false, // defaults to false
 		features: {
 			dependant: { amount: 1, measure: null }, // amount can be any number of Infinity.
@@ -131,8 +130,7 @@ export abstract class TrainingMethod {
 				skip_first = false;
 				continue;
 			}
-
-			// console.log(raw_row); break;
+			
 			const cur_x: DataRow = {}
 			const cur_y: DataRow = {}
 
@@ -144,9 +142,7 @@ export abstract class TrainingMethod {
 				else						// X
 					cur_x[feature.index] = feature_val
 			}
-
-			// console.log(cur_x)
-
+			
 			data.x.push(cur_x);
 			data.y.push(cur_y);
 		}
@@ -207,8 +203,6 @@ export abstract class TrainingMethod {
 	*/
 }
 
-
-export interface TrainingMethodCategory {
-    name: string;
-    methods: TrainingMethod[];
-}
+export abstract class SupervisedModelTrainer extends ModelTrainer {}
+export abstract class UnsupervisedModelTrainer extends ModelTrainer {}
+export abstract class ReinforcementModelTrainer extends ModelTrainer {}

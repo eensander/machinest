@@ -1,9 +1,5 @@
-import { Ref, ref } from "vue"
-import Papa from "papaparse"
 
 import { useToast } from "vue-toastification";
-
-// import { UseConfig } from './index'
 
 const toast = useToast()
 
@@ -20,14 +16,6 @@ export interface DatasetConfig {
 		first_row_is_header: boolean,
 		// delimiter: string
 	}
-
-
-	// parse_progress: , // ?
-	// parsed: ,          // ?
-
-
-
-	// parsed: 
 }
 
 function dataset(): DatasetConfig {
@@ -46,38 +34,5 @@ function dataset(): DatasetConfig {
 
 	}
 }
-
-/*
-export function parse_dataset(): void {
-	
-	// 1. a papa la parse from files.ts (-> create api)? 
-	// 2. push returning features onto config
-	// 3. profit?
-
-	// config.features
-	// console.log(dataset.file)
-	// return
-
-	if (dataset.file === null)
-		return
-
-	Papa.parse(dataset.file, {
-		error: (err, file) => {
-			// this.file_dataset_status = "error event";
-			console.log("ERROR:", err, file);
-		},
-		complete: (results) => {
-			// this.file_dataset_status = "complete event";
-			console.log("PARSED.", results);
-			console.log(results.data[0]);
-			// parsed_status.value = JSON.stringify(results)
-		}
-	});
-	
-	toast("Failed parsing dataset")
-
-}
-*/
-
 
 export default dataset

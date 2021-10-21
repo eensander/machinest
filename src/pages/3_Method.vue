@@ -1,39 +1,39 @@
 <template>
   <div class="flex flex-col">
-    <h1>3. Training Method</h1>
+    <h1>3. Method</h1>
 
-    <p class="text-sm">Please select the which training method you would like to use.</p>
+    <p class="text-sm">Please select the which model trainer you would like to use.</p>
 	
     <hr class="my-4" />
 
-	<span class="text-xl mb-3 font-light text-gray-600 text-left">Training Categories</span>
+	<span class="text-xl mb-3 font-light text-gray-600 text-left">Model trainer categories</span>
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
         <div
-            v-for="method_category in training_methods"
-            :key="method_category"
+            v-for="trainer_category in model_trainers"
+            :key="trainer_category"
             class="method-category-block"
-            :class="{'selected': config.training_method_category?.name == method_category.name }"
-            @click="config.training_method_category = method_category; config.training_method = null;"
+            :class="{'selected': config.model_trainer_category?.name == trainer_category.name }"
+            @click="config.model_trainer_category = trainer_category; config.model_trainer = null;"
 		>
-            <span class="self-center">{{ method_category.name }}</span>
+            <span class="self-center">{{ trainer_category.name }}</span>
         </div>
     </div>
 
     <hr class="my-4" />
 
-	<span v-if="config.training_method_category != null" class="text-xl mb-3 font-light text-gray-600 text-left">Methods</span>
-    <span class="text-center text-gray-600 font-light" v-if="config.training_method_category != null && config.training_method_category.methods.length == 0">
-		This category contains no training methods
+	<span v-if="config.model_trainer_category != null" class="text-xl mb-3 font-light text-gray-600 text-left">Model trainers</span>
+    <span class="text-center text-gray-600 font-light" v-if="config.model_trainer_category != null && config.model_trainer_category.trainers.length == 0">
+		This category contains no model trainers
 	</span>
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-4" v-if="config.training_method_category != null && config.training_method_category.methods.length > 0">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4" v-if="config.model_trainer_category != null && config.model_trainer_category.trainers.length > 0">
 		<div
-			v-for="method in config.training_method_category.methods"
-			:key="method"
+			v-for="trainer in config.model_trainer_category.trainers"
+			:key="trainer"
 			class="method-block"
-			:class="{'selected': config.training_method?.title == method.title }"
-			@click="config.training_method = method"
+			:class="{'selected': config.model_trainer?.title == trainer.title }"
+			@click="config.model_trainer = trainer"
 		>
-			<span class="self-center">{{ method.title }}</span>
+			<span class="self-center">{{ trainer.title }}</span>
 		</div>
     </div>
 
@@ -42,7 +42,7 @@
             &#xff1c; 2. Feature Configuration
         </button>
         <div class="w-0 h-0 invisible"></div>
-        <button @click="$router.push({ name: 'clean' });" :disabled="config.training_method == null" class="router-btn">
+        <button @click="$router.push({ name: 'clean' });" :disabled="config.model_trainer == null" class="router-btn">
             4. Clean Data &#xff1e;
         </button>
     </div>
@@ -53,13 +53,10 @@
 <script lang="ts">
 import { defineComponent, computed, ref } from 'vue';
 
-import training_methods from "@/training_methods";
-// import { TrainingMethodCategory, TrainingMethod } from '@/composables/types'
+import model_trainers from "@/model_trainers";
 
 import useConfig from '@/composables/useConfig'
 const config = useConfig()
-
-// import { TrainingMethodCategory } from '@/composables/types';
 
 export default defineComponent({
 
@@ -70,7 +67,7 @@ export default defineComponent({
 		return {
 			
 			config,
-			training_methods,
+			model_trainers,
 
 			page_next_disabled,
 
