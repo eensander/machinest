@@ -47,6 +47,46 @@ export default defineComponent({
 @tailwind components;
 @tailwind utilities;
 
+.not-implemented {
+	position: relative;
+	user-select: none;
+	cursor: not-allowed;
+	transition: all 2s;
+
+	.not-implemented-message {
+		display: none;
+	}
+	&:before {
+		transition: background 0.2s;
+	}
+	
+	&:hover {
+		.not-implemented-message {
+			text-align: center;
+			display: block;
+			position: absolute;
+			width: 80%;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			z-index: 999;
+			color: white;
+			padding: 1rem;
+			background: rgba(20, 16, 20, 0.85);
+		}
+
+		&:before {
+			content: "";
+			position: absolute;
+			top: 0; left: 0;
+			height: 100%; width: 100%;
+			background: rgba(65, 65, 66, 0.4);
+			z-index: 998;
+		}
+	}
+
+}
+
 @import '~katex/dist/katex.min.css';
 
 /*

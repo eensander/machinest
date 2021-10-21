@@ -13,7 +13,7 @@
                 <th>Index</th>
                 <th>Feature</th>
                 <th>First value</th>
-                <th>Measurability</th>
+                <!-- <th>Measurability</th> -->
                 <th>Is dependant (Y)</th>
                 <!-- <th>Independant</th> -->
             </tr>
@@ -31,14 +31,14 @@
 					<td class="td-index">{{ feature.index }}</td>
 					<td><input class="border border-gray-200 px-2 py-1" type="text" v-model="feature.name" :disabled="!feature.enabled" /></td>
 					<td><input class="bg-gray-100 cursor-not-allowed border border-gray-200 px-2 py-1 w-20" readonly type="text" :value="data_first_values[feature.index]" /></td>
-					<td>
+					<!-- <td>
 						<select class="border border-gray-200 px-2 py-1 cursor-pointer" v-model="feature.measurability" :disabled="!feature.enabled">
 							<option v-for="(option, option_key) in FeatureMeasurability" :key="option_key" :value="option">
 								{{ option_key }}
 							</option>
 						</select>
-						<!-- <input class="border border-gray-200 px-2 py-1" type="text" v-model="feature.measurability"  /> -->
-					</td>
+						<.!-- <input class="border border-gray-200 px-2 py-1" type="text" v-model="feature.measurability"  /> --.>
+					</td> -->
 					<td><input class="w-5 h-5 cursor-pointer" type="checkbox" v-model="feature.is_dependant" :disabled="!feature.enabled" /></td>
 				</tr>
 			</template>

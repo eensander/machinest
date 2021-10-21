@@ -44,9 +44,12 @@
         </div>
 
         <div class="md:w-1/2 my-4">
+	<div class="not-implemented">
+		<span class="not-implemented-message">This feature has not been implemented in this demonstration, but could be included in future releases</span>
+
             <h2 class="text-xl mb-1">Model</h2>
-            <input ref="file_model" id="file_model" class="hidden" type="file" @change="file_changed_model($event)">
-            <div class="bg-gray-50 border border-gray-300 text-center py-6">
+            <!-- <input ref="file_model" id="file_model" class="hidden" type="file" @change="file_changed_model($event)"> -->
+            <div class="bg-gray-50 border border-gray-300 text-center py-6" @click="toast.warning('It is not possible to upload a model in this version.')">
                 <label for="file_model" class="w-full cursor-pointer">
                     Click <span class="underline">here</span> to select the model
                 </label>
@@ -57,12 +60,8 @@
                 <!-- <span class="text-sm text-gray-500" >{{ file_model_status }}</span> -->
             </div>
         </div>
+		</div>
     </div>
-
-<!-- 
-	<button @click="dologthings(config.dataset.file)" :disabled="page_next_disabled" class="router-btn mt-2">
-            Do something
-    </button> -->
 
     <div class="flex flex-col md:flex-row items-start justify-between mt-8">
         <button @click="$router.push({ name: 'home' });" class="router-btn mb-2 md:mb-0">
@@ -97,8 +96,6 @@ import { defineComponent, ref, Ref, computed } from 'vue';
 
 import { useToast } from "vue-toastification";
 import { default as useConfig, reset_config } from '@/composables/useConfig';
-import { default as dataset_default } from '@/composables/useConfig/dataset'
-// import { parse_dataset } from '@/composables/useConfig/dataset'
 
 import Papa from 'papaparse';
 
@@ -271,6 +268,8 @@ export default defineComponent({
 			page_next_disabled,
 
 			dataset_stream_recommendation_bytes,
+
+			toast
 			
 		}
 	

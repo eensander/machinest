@@ -84,8 +84,12 @@ When the desired logic has been implemented, make sure the training method is in
 
 # Notes
 
+## Not implemented
+
 Some possibly desirable features are currently not completely implemented:
  - It is not possible to export or import a (pre-)trained model.
  - The chosen features are not checked against the conditions specified in a ModelTrainer,
  - It is not possible to split a dataset in a training/testing set for validation,
  - Calculating a score is not generally implemented, but can be manually implemented inside a ModelTrainer, using the set_result() function.
+
+Some of the non implemented features are visible throughout the application. When hovering these elements, a message will appear indicating its functionality is not implemented.
