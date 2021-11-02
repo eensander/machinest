@@ -1,5 +1,7 @@
 # bd02-ai-casus
 
+For details regarding the transfer of the codebase, please refer to `TRANSFER.md`.
+
 ## Project setup
 ```
 npm install
@@ -19,6 +21,3 @@ npm run build
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
