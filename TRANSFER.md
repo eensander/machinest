@@ -22,17 +22,22 @@ For cloning this repository, it is advised to have git installed on your system.
 Using the application requires only a web browser. However, tests have only been performed on the latest versions of the most popular web browsers (Firefox, Google Chrome, ...).
 
 
-The first step for both purposes is cloning this git repository and changing into the cloned directory.
+The first step for both purposes is placing this code repository in a desired file location and changing to this directory. If the code repository is hosted on a git repository, this step would include cloning this repository.
 ```bash
-git clone https://[].com/bd02-ai-casus
-cd bd02-ai-casus
+# git clone https://[git host]/machinest
+cd machinest
 ```
 
 ### Production
 
-Launch a new docker container as daemon
+First, build the docker image using the command below
 ```bash
-docker-compose up -d
+docker build -t machinest ./
+```
+
+Next, run the built image with the following command. Note that this command will run the server on port 80.
+```bash
+docker run -p 80:8080 machinest
 ```
 
 ### Development
