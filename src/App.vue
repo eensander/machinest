@@ -13,7 +13,7 @@
 		<div id="main" class="">
 			<div class="self-center mt-8 mb-10 border-b-4 border-gray-300 pb-2">
 				<!-- <img class="" alt="Vue logo" src="./assets/logo.png"> -->
-				<span @click="$router.push({ name: 'home' });" class="cursor-pointer text-5xl uppercase font-bold text-blue-800">Machinest</span>
+				<span @click="$router.push({ name: 'home' });" class="cursor-pointer text-5xl uppercase font-bold zuyd-color">Machinest</span>
 			</div>
 			
 			<router-view></router-view>
@@ -46,6 +46,9 @@ export default defineComponent({
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+$zuyd-red: #ed1b34;
+$zuyd-red-hover: #c51025;
 
 .not-implemented {
 	position: relative;
@@ -115,6 +118,10 @@ html {
     // @apply border border-gray-200;
 }
 
+.zuyd-color {
+	color: $zuyd-red;
+}
+
 
 h1 {
     @apply mb-4 font-bold font-serif text-4xl text-gray-800
@@ -128,7 +135,10 @@ h3 {
 
     @apply font-normal px-4 py-1 border-b-4 rounded-sm;
     // @apply bg-blue-600 border-blue-400 text-white; // default btn style.
-	@apply bg-blue-600 hover:bg-blue-500 text-white border-blue-800;
+	// @apply bg-blue-600 hover:bg-blue-500 text-white border-blue-800;
+	@apply text-white;
+	background-color: $zuyd-red;
+	// :hover: $zuyd-red-hover; 	Ik snap scss niet
 
     &.btn-green {
         // @apply bg-green-500 border-green-300 text-white;
