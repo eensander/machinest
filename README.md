@@ -1,4 +1,4 @@
-# Transfer Document
+# Machinest
 
 This application has been developed on behalf of the research lab Data Intelligence at Zuyd Hogeschool in The Netherlands.
 
