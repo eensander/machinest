@@ -98,3 +98,5 @@ Some possibly desirable features are currently not completely implemented:
  - Calculating a score is not generally implemented, but can be manually implemented inside a ModelTrainer, using the set_result() function.
 
 Some of the non implemented features are visible throughout the application. When hovering these elements, a message will appear indicating its functionality is not implemented.
+
+gh-pages branch created as described on: https://gist.github.com/cobyism/4730490
