@@ -1,44 +1,82 @@
-import { Ref, ref } from "vue";
+import { reactive } from "vue";
 
-import { TrainingMethod, TrainingMethodCategory } from '../types'
-import { ParseConfig } from 'papaparse'
+import { ModelTrainer, ModelTrainerCategory } from '../useTrainer/modelTrainer'
 
-// import { default as useTrainingMethods } from '../useTrainingMethods'
-
+import useTrainer from '../useTrainer';
 
 import { default as features, FeaturesConfig } from './features'
-import { default as files, FilesConfig } from './files'
+import { default as dataset, DatasetConfig } from './dataset'
+import { default as model, ModelConfig } from './model'
 
-const dataset_config = ref({})
+// const dataset_config = {}
 
-const training_method_category = ref(null)
-const training_method = ref(null)
+const model_trainer_category = null
+const model_trainer = null
 
-const test = ref(null)
+const test = null
 
-export interface UseConfig extends FeaturesConfig, FilesConfig {
+export interface UseConfig {
 
-	dataset_config: Ref<ParseConfig>
+	features: FeaturesConfig,
+	dataset: DatasetConfig,
+	model: ModelConfig,
 
-	training_method_category: Ref<TrainingMethodCategory | null>,
-	training_method: Ref<TrainingMethod | null>,
+	// dataset_config: ParseConfig
 
-	test: Ref<string | null>,
+	model_trainer_category: ModelTrainerCategory | null,
+	model_trainer: ModelTrainer | null,
+
+	validation: {
+		train_split_size: number | null,
+		randomize: boolean
+	},
+
+	test: string | null,
 	
 }
 
-export default function useConfig(): UseConfig {
-	// return toRefs(state)
-	return {
-		files,
+const config: UseConfig = reactive({
+	
+	dataset: dataset(),
+	model,
 
-		dataset_config,
+	// dataset_config,
+
+	model_trainer_category,
+	model_trainer,
+
+	validation: {
+		train_split_size: null,
+		randomize: true
+	},
+
+	features,
 	
-		training_method_category,
-		training_method,
+	test,
+})
+
+export function reset_config(config: UseConfig, options: any = {}): void {
+
+	// console.log("CLEARING? ", config, options, dataset())
+
+	if (options.dataset ?? true)
+		config.dataset = dataset();
+	if (options.model ?? true)
+		config.model = model;
 	
-		features,
-		
-		test,
-	}
+	config.model_trainer_category = model_trainer_category;
+	config.model_trainer = model_trainer;
+	config.validation = {
+		train_split_size: null,
+		randomize: true
+	},
+	config.features = features;
+	config.test = test;
+
+	const {trainer_reset} = useTrainer()
+	trainer_reset()
+}
+
+export default function useConfig(): UseConfig {
+	return config
 }
