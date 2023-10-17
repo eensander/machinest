@@ -1,6 +1,6 @@
 # Machinest
 
-This application has been developed on behalf of the research lab Data Intelligence at Zuyd Hogeschool in The Netherlands.
+This application has been developed while at and with little to negative support by Zuyd Hogeschool.
 
 The application serves as a demonstration of performing Machine Learning completely inside a web browser.
 With developing the application, there has been a primary focus on extensibility.
